@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>router</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/x6/2.18.1/index.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    /**
+     * 
+     * 
+     **/
+    const graph = new X6.Graph({
+        container: document.getElementById('app'),
+        grid: true,
+        background: {
+            color: '#f0f0f0'
+        }
+    })
+
+    graph.addNode({
+        x: 100,
+        y: 100,
+        width: 100,
+        height: 40,
+        label: 'Hello',
+        tools: {
+            name: 'boundary',
+            args: {
+                attrs: {
+                    fill: '#f0f0f0',
+                    stroke: '#31d0c6',
+                    strokeWidth: 2,
+                    strokeDasharray: '5 5',
+                }
+            }
+        }
+    })
+
+
+</script>
+</html>
