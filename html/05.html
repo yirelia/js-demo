@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>router</title>
+  <link rel="stylesheet" href="../css/index.css" />
+  <script src="../js/x6/2.18.1/index.js"></script>
+</head>
+<style>
+  .option {
+    position: fixed;
+    top: 100px;
+    left: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>
+
+<body>
+  <div id="app"></div>
+  <div class="option">
+    <div><span>source</span> <input id="sourceInput"></input></div>
+    <div><span>target</span> <input id="targetInput"></input></div>
+    <div>
+      <button onclick="runSearch()">run</button>
+    </div>
+  </div>
+</body>
+<script type="module">
+
+  let sourceId = "node_3_1";
+  let targetId = "node_5_3";
+  let isObstacleSet = false
+
+  document.getElementById("sourceInput").value = sourceId;
+  document.getElementById("targetInput").value = targetId;
+
+  /***
+   * @description: 贪心算法
+   * 
+   * ***/
+
+  class Point {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    static create(x, y) {
+      return new Point(x, y);
+    }
+
+    static clone(x, y) {
+      if (x instanceof Point) {
+        return new Point(x.x, x.y);
+      }
+      return new Point(x, y);
+    }
+  }
+
+  class AlgNode {
+    constructor(x, y, val) {
+      this.x = x;
+      this.y = y;
+      this.val = val;
+      this.id = `node_${x}_${y}`;
+      this.cost = AlgNode.getRandomInt(1, 5);
+      this.isReached = true
+    }
+
+    visited() {
+      this.val.setAttrByPath("body/fill", "rgb(105,105,105)");
+    }
+
+    toBeVisited() {
+      this.val.setAttrByPath("body/fill", "green");
+    }
+    static create(x, y, val) {
+      return new AlgNode(x, y, val);
+    }
+
+    static getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    updateReachable() {
+      this.isReached = !this.isReached
+      if (!this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(138,43,226)");
+      } else {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    reset() {
+      if (this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    updateLabel(label) {
+      this.val.setAttrByPath(`label/text`, label);
+    }
+
+  }
+
+  class Queue {
+    constructor(queue = []) {
+      this.data = [...queue];
+      this.size = queue.length;
+    }
+
+    push(item) {
+      this.data.push(item);
+      this.size++;
+    }
+
+    pop() {
+      if (this.size > 0) {
+        this.size--;
+      }
+      return this.data.shift();
+    }
+
+    isEmpty() {
+      return this.size === 0;
+    }
+  }
+
+  //**最小值优先队列 */
+  class MinPQ {
+    pq = [];
+    constructor() {
+      this.heap = [];
+      this.N = 0;
+    }
+
+    isEmpty() {
+      return this.N === 0;
+    }
+
+    size() {
+      return this.N;
+    }
+
+    insert(v) {
+      this.pq[++this.N] = v;
+      this.swim(this.N);
+    }
+    greater(i, j) {
+      return this.pq[i].getWeight() > this.pq[j].getWeight();
+    }
+
+    exch(i, j) {
+      const t = this.pq[i];
+      this.pq[i] = this.pq[j];
+      this.pq[j] = t;
+    }
+
+    swim(k) {
+      while (k > 1 && this.greater(Math.floor(k / 2), k)) {
+        this.exch(Math.floor(k / 2), k);
+        k = Math.floor(k / 2);
+      }
+    }
+
+    delMin() {
+      const max = this.pq[1];
+      this.exch(1, this.N--);
+      this.pq[this.N + 1] = null;
+      this.sink(1);
+      return max;
+    }
+
+    sink(k) {
+      while (2 * k <= this.N) {
+        let j = 2 * k;
+        if (j < this.N && this.greater(j, j + 1)) j++;
+        if (!this.greater(k, j)) break;
+        this.exch(k, j);
+        k = j;
+      }
+    }
+
+    print() {
+      console.log(this.pq);
+    }
+  }
+
+  class PriorityQueue {
+    constructor() {
+      this.data = [];
+    }
+
+    push(element, priority) {
+      const queueElement = { element, priority };
+      let added = false;
+      for (let i = 0; i < this.data.length; i++) {
+        if (queueElement.priority < this.data[i].priority) {
+          this.data.splice(i, 0, queueElement);
+          added = true;
+          break;
+        }
+      }
+      if (!added) {
+        this.data.push(queueElement);
+      }
+    }
+
+    pop() {
+      return this.data.shift().element;
+    }
+
+    isEmpty() {
+      return this.data.length === 0;
+    }
+  } const nodeMap = new Map();
+  const graph = new X6.Graph({
+    container: document.getElementById("app"),
+    grid: true,
+    background: {
+      color: "#f5f5f5",
+    },
+    interacting: {
+      nodeMovable: false, // 禁止节点移动
+      edgeMovable: false, // 禁止边移动
+    },
+    async: false,
+  });
+
+  graph.on('node:click', ({ node }) => {
+    nodeMap.get(node.id).updateReachable();
+  })
+
+  const allNodes = [];
+
+  let y = 100;
+  const width = 40;
+  const height = 40;
+  const padding = 10;
+  let index = 0;
+  for (let i = 0; i < 10; i++) {
+    let x = 100;
+    for (let j = 0; j < 10; j++) {
+      const id = `node_${i}_${j}`;
+      const gNode = graph.addNode({
+        id,
+        x: x,
+        y: y,
+        width,
+        height,
+        label: `${index}`,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+          },
+        },
+      });
+      const node = AlgNode.create(i, j, gNode);
+      nodeMap.set(id, node);
+      index++;
+      x += width + padding;
+    }
+    y += height + padding;
+  }
+
+  console.log(nodeMap);
+
+  // 获取邻居节点
+  const getNeighbors = (node) => {
+    const dir = [
+      [1, 0], // RIGHT
+      [0, 1], // DOWN
+      [-1, 0], // LEFT
+      [0, -1], // UP
+    ];
+    const result = [];
+    for (let i = 0; i < dir.length; i++) {
+      const [dx, dy] = dir[i];
+      // const neighbor = {x: node.x + dx, y: node.y + dy};
+      const neighbor = nodeMap.get(`node_${node.x + dx}_${node.y + dy}`);
+      if (neighbor) {
+        result.push(neighbor);
+      }
+    }
+    return result;
+  };
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  // 计算权重
+  function cost(source, target) {
+    return target.cost;
+  }
+
+  function heuristic(a, b) {
+    // Manhattan distance on a square grid
+    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
+  }
+
+
+  async function greedyBestFirstSearch(source, target) {
+    const queue = new PriorityQueue();
+    queue.push(source, 0);
+    const cameFrom = {};
+    // const costSoFar = {};
+    cameFrom[source.id] = null;
+    const interval = 500;
+
+    while (!queue.isEmpty()) {
+      const current = queue.pop();
+      current.visited();
+      const neighbors = getNeighbors(current);
+      if (current.id === target.id) {
+        break;
+      }
+      for (const next of neighbors) {
+        // TODO 计算权重
+        // const newCost = costSoFar[current.id] + 1;
+        if (!cameFrom[next.id]&& next.isReached) {
+          const priority = heuristic(target.val.getBBox().center, next.val.getBBox().center)
+          queue.push(next, priority);
+          cameFrom[next.id] = current;
+        }
+      }
+      await sleep(interval);
+    }
+
+    const findPath = (source, target) => {
+      const path = [];
+      let current = target;
+      while (current.id !== source.id) {
+        path.push(current.val.getBBox().center);
+        current = cameFrom[current.id];
+      }
+      path.push(source.val.getBBox().center);
+
+      return path.reverse();
+    };
+
+    return findPath(source, target);
+  }
+
+
+
+  window.runSearch = async function () {
+    for (const [key, value] of nodeMap) {
+      value.reset();
+      graph.removeNode(`path_0001`)
+    }
+
+
+    const sId = document.getElementById("sourceInput").value
+    const tId = document.getElementById("targetInput").value
+    const source = nodeMap.get(sId);
+    const target = nodeMap.get(tId);
+    source.updateLabel(`S`)
+    target.updateLabel(`T`)
+    const paths = await greedyBestFirstSearch(source, target);
+
+    // const paths = findPath(target, source);
+
+    // 格式化路径信息
+    const formatPath = (paths) => {
+      let pathString = `M ${paths[0].x} ${paths[0].y}`;
+      for (let index = 1; index < paths.length; index++) {
+        pathString += ` L ${paths[index].x} ${paths[index].y}`;
+      }
+      return pathString;
+    };
+
+    graph.addNode({
+      id: `path_0001`,
+      shape: "path",
+      attrs: {
+        body: {
+          d: formatPath(paths),
+          stroke: `rgb(30,144,255)`,
+        },
+      },
+    });
+  }
+
+</script>
+
+</html>
