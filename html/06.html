@@ -39,7 +39,7 @@
   document.getElementById("targetInput").value = targetId;
 
   /***
-   * @description: 贪心算法
+   * @description: A*算法
    * 
    * ***/
 
@@ -311,8 +311,9 @@
     const queue = new PriorityQueue();
     queue.push(source, 0);
     const cameFrom = {};
-    // const costSoFar = {};
+    const costSoFar = {};
     cameFrom[source.id] = null;
+    costSoFar[source.id] = 0;
     const interval = 500;
 
     while (!queue.isEmpty()) {
@@ -325,8 +326,11 @@
       for (const next of neighbors) {
         // TODO 计算权重
         // const newCost = costSoFar[current.id] + 1;
-        if (!cameFrom[next.id]&& next.isReached) {
-          const priority = heuristic(target.val.getBBox().center, next.val.getBBox().center)
+        const newCost = costSoFar[current] + 1
+
+        if ( next.isReached && (!cameFrom[next.id] || newCost < costSoFar[next.id])) {
+          const priority = newCost +  heuristic(target.val.getBBox().center, next.val.getBBox().center)
+          costSoFar[next.id] = newCost;
           queue.push(next, priority);
           cameFrom[next.id] = current;
         }
