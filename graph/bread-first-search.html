@@ -1,0 +1,282 @@
+<div id="app"></div>
+<div class="option">
+  <div><span>source</span> <input id="sourceInput"></input></div>
+  <div><span>target</span> <input id="targetInput"></input></div>
+  <div>
+    <button onclick="runSearch()">run</button>
+  </div>
+</div>
+<style>
+  #app {
+    width: 100vw;
+    height: 100vh;
+  }
+  .option {
+    position: fixed;
+    top: 100px;
+    left: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>
+
+<script src="../js/x6/2.18.1/index.js"></script>
+<script>
+  /***
+   * 广度优先搜索路径算法
+    单点最短路径。
+    给定一幅图和一个起点 s，回答“从 s 到给定目的顶点 v 是否存在一条路径？如果有，找出其中最短的那条（所含边数最少）。”等类似问题。
+  
+    ***/
+
+</script>
+<script>
+  class Point {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    static create(x, y) {
+      return new Point(x, y);
+    }
+
+    static clone(x, y) {
+      if (x instanceof Point) {
+        return new Point(x.x, x.y);
+      }
+      return new Point(x, y);
+    }
+  }
+  class Rectangle extends Point {
+    constructor(x, y, width, height) {
+      super(x, y);
+      this.width = width;
+      this.height = height;
+    }
+
+    get center() {
+      return new Point(this.x + this.width / 2, this.y + this.height / 2);
+    }
+  }
+  class Queue {
+    constructor(queue = []) {
+      this.data = [...queue];
+      this.size = queue.length;
+    }
+
+    push(item) {
+      this.data.push(item);
+      this.size++;
+    }
+
+    pop() {
+      if (this.size > 0) {
+        this.size--;
+      }
+      return this.data.shift();
+    }
+
+    isEmpty() {
+      return this.size === 0;
+    }
+  }
+  class AlgNode {
+    constructor(x, y, val) {
+      this.x = x;
+      this.y = y;
+      this.val = val;
+      this.id = `node_${x}_${y}`;
+      this.cost = AlgNode.getRandomInt(1, 5);
+      this.isReached = true;
+    }
+
+    visited() {
+      this.val.setAttrByPath("body/fill", "rgb(105,105,105)");
+    }
+
+    toBeVisited() {
+      this.val.setAttrByPath("body/fill", "green");
+    }
+    static create(x, y, val) {
+      return new AlgNode(x, y, val);
+    }
+
+    static getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    updateReachable() {
+      this.isReached = !this.isReached;
+      if (!this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(138,43,226)");
+      } else {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    reset() {
+      if (this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    updateLabel(label) {
+      this.val.setAttrByPath(`label/text`, label);
+      this.val.setAttrByPath(`body/stroke`, `red`);
+      this.val.setAttrByPath(`body/strokeWidth`, 3);
+      this.val.setAttrByPath(`body/style/color`, `red`);
+    }
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+</script>
+<script>
+let sourceId = "node_1_2";
+  let targetId = "node_4_6";
+
+  document.getElementById("sourceInput").value = sourceId;
+  document.getElementById("targetInput").value = targetId;
+  const graph = new X6.Graph({
+    container: document.getElementById("app"),
+    grid: true,
+    background: {
+      color: "#f5f5f5",
+    },
+    interacting: {
+      nodeMovable: false, // 禁止节点移动
+      edgeMovable: false, // 禁止边移动
+    },
+    async: false,
+  });
+  let y = 100;
+  const width = 40;
+  const height = 40;
+  const padding = 10;
+  let index = 0;
+  const nodeMap = new Map();
+  for (let i = 0; i < 10; i++) {
+    let x = 100;
+    for (let j = 0; j < 10; j++) {
+      const id = `node_${i}_${j}`;
+      const gNode = graph.addNode({
+        id,
+        x: x,
+        y: y,
+        width,
+        height,
+        label: `${index}`,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+          },
+        },
+      });
+      const node = AlgNode.create(i, j, gNode);
+      nodeMap.set(id, node);
+      index++;
+      x += width + padding;
+    }
+    y += height + padding;
+  }
+
+    // 获取邻居节点
+    const getNeighbors = (node) => {
+    const dir = [
+      [1, 0], // RIGHT
+      [0, 1], // DOWN
+      [-1, 0], // LEFT
+      [0, -1], // UP
+    ];
+    const result = [];
+    for (let i = 0; i < dir.length; i++) {
+      const [dx, dy] = dir[i];
+      const neighbor = nodeMap.get(`node_${node.x + dx}_${node.y + dy}`);
+      if (neighbor) {
+        result.push(neighbor);
+      }
+    }
+    return result;
+  };
+
+  async function breadFirstSearch(source, target) {
+    const queue = new Queue();
+    queue.push(source);
+    const cameFrom = {};
+    const visited = new Set();
+    visited.add(source.id);
+    while (!queue.isEmpty()) {
+      const current = queue.pop();
+      if (current.id === target.id) {
+        break;
+      }
+      current.visited();
+      for (const neighbor of getNeighbors(current)) {
+        if (!visited.has(neighbor.id)) {
+          cameFrom[neighbor.id] = current;
+          neighbor.toBeVisited();
+          visited.add(neighbor.id)
+          queue.push(neighbor);
+        }
+      }
+
+      await sleep(500);
+    }
+    
+    const findPath = (source, target) => {
+      const path = [];
+      let current = target;
+      while (current.id !== source.id) {
+        path.push(current.val.getBBox().center);
+        current = cameFrom[current.id];
+      }
+      path.push(source.val.getBBox().center);
+
+      return path.reverse();
+    };
+
+    return findPath(source, target);
+    return false;
+  }
+
+  const edgeId = `path_0001`
+  window.runSearch = async function () {
+    for (const [key, value] of nodeMap) {
+      value.reset();
+      graph.removeNode(edgeId)
+    }
+
+
+    const sId = document.getElementById("sourceInput").value
+    const tId = document.getElementById("targetInput").value
+    const source = nodeMap.get(sId);
+    const target = nodeMap.get(tId);
+    source.updateLabel(`S`)
+    target.updateLabel(`T`)
+    const paths = await breadFirstSearch(source, target);
+    // 格式化路径信息
+    const formatPath = (paths) => {
+      let pathString = `M ${paths[0].x} ${paths[0].y}`;
+      for (let index = 1; index < paths.length; index++) {
+        pathString += ` L ${paths[index].x} ${paths[index].y}`;
+      }
+      return pathString;
+    };
+
+    graph.addNode({
+      id: edgeId,
+      shape: "path",
+      attrs: {
+        body: {
+          d: formatPath(paths),
+          stroke: `rgb(30,144,255)`,
+        },
+      },
+    });
+  }
+</script>

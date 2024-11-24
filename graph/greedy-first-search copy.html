@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>router</title>
-  <link rel="stylesheet" href="../css/index.css" />
-  <script src="../js/x6/2.18.1/index.js"></script>
-</head>
+<div id="app"></div>
+<div class="option">
+  <div><span>source</span> <input id="sourceInput"></input></div>
+  <div><span>target</span> <input id="targetInput"></input></div>
+  <div>
+    <button onclick="runSearch()">run</button>
+  </div>
+</div>
 <style>
+  #app {
+    width: 100vw;
+    height: 100vh;
+  }
+
   .option {
     position: fixed;
     top: 100px;
@@ -18,31 +21,8 @@
     gap: 10px;
   }
 </style>
-
-<body>
-  <div id="app"></div>
-  <div class="option">
-    <div><span>source</span> <input id="sourceInput"></input></div>
-    <div><span>target</span> <input id="targetInput"></input></div>
-    <div>
-      <button onclick="runSearch()">run</button>
-    </div>
-  </div>
-</body>
-<script type="module">
-
-  let sourceId = "node_3_1";
-  let targetId = "node_5_3";
-  let isObstacleSet = false
-
-  document.getElementById("sourceInput").value = sourceId;
-  document.getElementById("targetInput").value = targetId;
-
-  /***
-   * @description: A*算法
-   * 
-   * ***/
-
+<script src="../js/x6/2.18.1/index.js"></script>
+<script>
   class Point {
     constructor(x, y) {
       this.x = x;
@@ -60,56 +40,17 @@
       return new Point(x, y);
     }
   }
-
-  class AlgNode {
-    constructor(x, y, val) {
-      this.x = x;
-      this.y = y;
-      this.val = val;
-      this.id = `node_${x}_${y}`;
-      this.cost = AlgNode.getRandomInt(1, 5);
-      this.isReached = true
+  class Rectangle extends Point {
+    constructor(x, y, width, height) {
+      super(x, y);
+      this.width = width;
+      this.height = height;
     }
 
-    visited() {
-      this.val.setAttrByPath("body/fill", "rgb(105,105,105)");
+    get center() {
+      return new Point(this.x + this.width / 2, this.y + this.height / 2);
     }
-
-    toBeVisited() {
-      this.val.setAttrByPath("body/fill", "green");
-    }
-    static create(x, y, val) {
-      return new AlgNode(x, y, val);
-    }
-
-    static getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    updateReachable() {
-      this.isReached = !this.isReached
-      if (!this.isReached) {
-        this.val.setAttrByPath("body/fill", "rgb(138,43,226)");
-      } else {
-        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
-      }
-    }
-
-    reset() {
-      if (this.isReached) {
-        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
-      }
-    }
-
-    updateLabel(label) {
-      this.val.setAttrByPath(`label/text`, label);
-      this.val.setAttrByPath(`body/stroke`, `red`);
-    }
-
   }
-
   class Queue {
     constructor(queue = []) {
       this.data = [...queue];
@@ -132,7 +73,60 @@
       return this.size === 0;
     }
   }
+  class AlgNode {
+    constructor(x, y, val) {
+      this.x = x;
+      this.y = y;
+      this.val = val;
+      this.id = `node_${x}_${y}`;
+      this.cost = AlgNode.getRandomInt(1, 5);
+      this.isReached = true;
+    }
 
+    visited() {
+      this.val.setAttrByPath("body/fill", "rgb(105,105,105)");
+    }
+
+    toBeVisited() {
+      this.val.setAttrByPath("body/fill", "green");
+    }
+    static create(x, y, val) {
+      return new AlgNode(x, y, val);
+    }
+
+    static getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    updateReachable() {
+      this.isReached = !this.isReached;
+      if (!this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(138,43,226)");
+      } else {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    reset() {
+      if (this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    updateLabel(label) {
+      this.val.setAttrByPath(`label/text`, label);
+      this.val.setAttrByPath(`body/stroke`, `red`);
+      this.val.setAttrByPath(`body/strokeWidth`, 3);
+      this.val.setAttrByPath(`body/style/color`, `red`);
+    }
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  // 最小优先队列
   class MinPQ {
     constructor() {
       this.pq = [];
@@ -199,34 +193,15 @@
     }
   }
 
-  class PriorityQueue {
-    constructor() {
-      this.data = [];
-    }
+</script>
+<script>
 
-    push(element, priority) {
-      const queueElement = { element, priority };
-      let added = false;
-      for (let i = 0; i < this.data.length; i++) {
-        if (queueElement.priority < this.data[i].priority) {
-          this.data.splice(i, 0, queueElement);
-          added = true;
-          break;
-        }
-      }
-      if (!added) {
-        this.data.push(queueElement);
-      }
-    }
+  let sourceId = "node_1_2";
+  let targetId = "node_4_6";
+  document.getElementById("sourceInput").value = sourceId;
+  document.getElementById("targetInput").value = targetId;
 
-    pop() {
-      return this.data.shift().element;
-    }
-
-    isEmpty() {
-      return this.data.length === 0;
-    }
-  } const nodeMap = new Map();
+  const nodeMap = new Map();
   const graph = new X6.Graph({
     container: document.getElementById("app"),
     grid: true,
@@ -276,8 +251,6 @@
     y += height + padding;
   }
 
-  console.log(nodeMap);
-
   // 获取邻居节点
   const getNeighbors = (node) => {
     const dir = [
@@ -307,6 +280,7 @@
     return target.cost;
   }
 
+  // 计算曼哈顿距离
   function heuristic(a, b) {
     // Manhattan distance on a square grid
     return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
@@ -314,31 +288,25 @@
 
 
   async function greedyBestFirstSearch(source, target) {
-    // const queue = new PriorityQueue();
     const queue = new MinPQ();
+    // 首先访问第一个source
     queue.push(source, 0);
+    // 记录最短路径
     const cameFrom = {};
-    const costSoFar = {};
     cameFrom[source.id] = null;
-    costSoFar[source.id] = 0;
     const interval = 500;
 
     while (!queue.isEmpty()) {
-      const {element: current, priority} = queue.pop();
-      console.log(`current: ${current.id}, priority: ${priority}`, current);
-
+      const current = queue.pop().element;
       current.visited();
       const neighbors = getNeighbors(current);
       if (current.id === target.id) {
         break;
       }
       for (const next of neighbors) {
-        // TODO 计算权重
-        const newCost = costSoFar[current.id] + 1;
-
-        if ( next.isReached && (!cameFrom[next.id] || newCost < costSoFar[next.id])) {
-          const priority = newCost +  heuristic(target.val.getBBox().center, next.val.getBBox().center)
-          costSoFar[next.id] = newCost;
+        if (!cameFrom[next.id] && next.isReached) {
+          // 计算曼哈顿距离
+          const priority = heuristic(target.val.getBBox().center, next.val.getBBox().center)
           queue.push(next, priority);
           cameFrom[next.id] = current;
         }
@@ -402,5 +370,3 @@
   }
 
 </script>
-
-</html>
