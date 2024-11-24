@@ -133,28 +133,26 @@
     }
   }
 
-  //**最小值优先队列 */
   class MinPQ {
-    pq = [];
     constructor() {
-      this.heap = [];
-      this.N = 0;
+      this.pq = [];
+      this.n = 0;
     }
 
     isEmpty() {
-      return this.N === 0;
+      return this.n === 0;
     }
 
-    size() {
-      return this.N;
+    push(v, priority = 0) {
+      this.pq[++this.n] = {
+        element: v,
+        priority: priority,
+      };
+      this.swim(this.n);
     }
 
-    insert(v) {
-      this.pq[++this.N] = v;
-      this.swim(this.N);
-    }
     greater(i, j) {
-      return this.pq[i].getWeight() > this.pq[j].getWeight();
+      return this.pq[i].priority > this.pq[j].priority;
     }
 
     exch(i, j) {
@@ -170,26 +168,34 @@
       }
     }
 
-    delMin() {
-      const max = this.pq[1];
-      this.exch(1, this.N--);
-      this.pq[this.N + 1] = null;
-      this.sink(1);
-      return max;
-    }
-
     sink(k) {
-      while (2 * k <= this.N) {
+      while (2 * k <= this.n) {
         let j = 2 * k;
-        if (j < this.N && this.greater(j, j + 1)) j++;
+        if (j < this.n && this.greater(j, j + 1)) j++;
         if (!this.greater(k, j)) break;
         this.exch(k, j);
         k = j;
       }
     }
+    pop() {
+      const min = this.pq[1];
+      // 交换第一个元素和最后一个元素
+      this.exch(1, this.n--);
+      // 删除已取出的元素，
+      this.pq[this.n + 1] = null;
+      this.sink(1);
+      return min;
+    }
 
-    print() {
-      console.log(this.pq);
+    printQueue() {
+      console.log("Priority Queue:", this.n, this.pq.length);
+      for (let i = 1; i < this.n; i++) {
+
+        const str = `Element: ${this.pq[i].element}, Priority: ${this.pq[i].priority}`;
+        console.log(
+          `Element: ${this.pq[i].element}, Priority: ${this.pq[i].priority}`
+        );
+      }
     }
   }
 
@@ -308,7 +314,8 @@
 
 
   async function greedyBestFirstSearch(source, target) {
-    const queue = new PriorityQueue();
+    // const queue = new PriorityQueue();
+    const queue = new MinPQ();
     queue.push(source, 0);
     const cameFrom = {};
     const costSoFar = {};
@@ -317,7 +324,9 @@
     const interval = 500;
 
     while (!queue.isEmpty()) {
-      const current = queue.pop();
+      const {element: current, priority} = queue.pop();
+      console.log(`current: ${current.id}, priority: ${priority}`, current);
+
       current.visited();
       const neighbors = getNeighbors(current);
       if (current.id === target.id) {
@@ -325,8 +334,7 @@
       }
       for (const next of neighbors) {
         // TODO 计算权重
-        // const newCost = costSoFar[current.id] + 1;
-        const newCost = costSoFar[current] + 1
+        const newCost = costSoFar[current.id] + 1;
 
         if ( next.isReached && (!cameFrom[next.id] || newCost < costSoFar[next.id])) {
           const priority = newCost +  heuristic(target.val.getBBox().center, next.val.getBBox().center)
