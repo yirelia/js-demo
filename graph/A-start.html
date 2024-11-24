@@ -1,0 +1,390 @@
+<div id="app"></div>
+<div class="option">
+  <div><span>source</span> <input id="sourceInput"></input></div>
+  <div><span>target</span> <input id="targetInput"></input></div>
+  <div>
+    <button onclick="runSearch()">run</button>
+  </div>
+</div>
+<style>
+  #app {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .option {
+    position: fixed;
+    top: 100px;
+    left: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>
+<script src="../js/x6/2.18.1/index.js"></script>
+<script>
+ /**
+   *  A* 搜索算法（A* search algorithm）是一种用于图搜索的启发式算法，常用于路径规划和图形搜索问题。它结合了 Dijkstra 算法和贪心最佳优先搜索的优点，能够在保证找到最优路径的同时提高搜索效率。
+   * 算法原理
+   * A* 算法使用以下公式来评估每个节点：
+   *[ f(n) = g(n) + h(n) ]
+   *
+   * ( g(n) ) 表示从起点到节点 ( n ) 的实际代价。
+   *( h(n) ) 表示从节点 ( n ) 到目标节点的估计代价（启发式函数）。
+   * ( f(n) ) 是节点 ( n ) 的总估计代价。
+   * **/
+</script>
+<script>
+  class Point {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    static create(x, y) {
+      return new Point(x, y);
+    }
+
+    static clone(x, y) {
+      if (x instanceof Point) {
+        return new Point(x.x, x.y);
+      }
+      return new Point(x, y);
+    }
+  }
+  class Rectangle extends Point {
+    constructor(x, y, width, height) {
+      super(x, y);
+      this.width = width;
+      this.height = height;
+    }
+
+    get center() {
+      return new Point(this.x + this.width / 2, this.y + this.height / 2);
+    }
+  }
+  class Queue {
+    constructor(queue = []) {
+      this.data = [...queue];
+      this.size = queue.length;
+    }
+
+    push(item) {
+      this.data.push(item);
+      this.size++;
+    }
+
+    pop() {
+      if (this.size > 0) {
+        this.size--;
+      }
+      return this.data.shift();
+    }
+
+    isEmpty() {
+      return this.size === 0;
+    }
+  }
+  class AlgNode {
+    constructor(x, y, val) {
+      this.x = x;
+      this.y = y;
+      this.val = val;
+      this.id = `node_${x}_${y}`;
+      this.cost = AlgNode.getRandomInt(1, 5);
+      this.isReached = true;
+    }
+
+    visited() {
+      this.val.setAttrByPath("body/fill", "rgb(105,105,105)");
+    }
+
+    toBeVisited() {
+      this.val.setAttrByPath("body/fill", "green");
+    }
+    static create(x, y, val) {
+      return new AlgNode(x, y, val);
+    }
+
+    static getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    updateReachable() {
+      this.isReached = !this.isReached;
+      if (!this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(138,43,226)");
+      } else {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    reset() {
+      if (this.isReached) {
+        this.val.setAttrByPath("body/fill", "rgb(255,255,255)");
+      }
+    }
+
+    updateLabel(label) {
+      this.val.setAttrByPath(`label/text`, label);
+      this.val.setAttrByPath(`body/stroke`, `red`);
+      this.val.setAttrByPath(`body/strokeWidth`, 3);
+      this.val.setAttrByPath(`body/style/color`, `red`);
+    }
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  // 最小优先队列
+  class MinPQ {
+    constructor() {
+      this.pq = [];
+      this.n = 0;
+    }
+
+    isEmpty() {
+      return this.n === 0;
+    }
+
+    push(v, priority = 0) {
+      this.pq[++this.n] = {
+        element: v,
+        priority: priority,
+      };
+      this.swim(this.n);
+    }
+
+    greater(i, j) {
+      return this.pq[i].priority > this.pq[j].priority;
+    }
+
+    exch(i, j) {
+      const t = this.pq[i];
+      this.pq[i] = this.pq[j];
+      this.pq[j] = t;
+    }
+
+    swim(k) {
+      while (k > 1 && this.greater(Math.floor(k / 2), k)) {
+        this.exch(Math.floor(k / 2), k);
+        k = Math.floor(k / 2);
+      }
+    }
+
+    sink(k) {
+      while (2 * k <= this.n) {
+        let j = 2 * k;
+        if (j < this.n && this.greater(j, j + 1)) j++;
+        if (!this.greater(k, j)) break;
+        this.exch(k, j);
+        k = j;
+      }
+    }
+    pop() {
+      const min = this.pq[1];
+      // 交换第一个元素和最后一个元素
+      this.exch(1, this.n--);
+      // 删除已取出的元素，
+      this.pq[this.n + 1] = null;
+      this.sink(1);
+      return min;
+    }
+
+    printQueue() {
+      console.log("Priority Queue:", this.n, this.pq.length);
+      for (let i = 1; i < this.n; i++) {
+
+        const str = `Element: ${this.pq[i].element}, Priority: ${this.pq[i].priority}`;
+        console.log(
+          `Element: ${this.pq[i].element}, Priority: ${this.pq[i].priority}`
+        );
+      }
+    }
+  }
+
+</script>
+<script>
+
+  let sourceId = "node_1_2";
+  let targetId = "node_4_6";
+  document.getElementById("sourceInput").value = sourceId;
+  document.getElementById("targetInput").value = targetId;
+
+  const nodeMap = new Map();
+  const graph = new X6.Graph({
+    container: document.getElementById("app"),
+    grid: true,
+    background: {
+      color: "#f5f5f5",
+    },
+    interacting: {
+      nodeMovable: false, // 禁止节点移动
+      edgeMovable: false, // 禁止边移动
+    },
+    async: false,
+  });
+
+  graph.on('node:click', ({ node }) => {
+    nodeMap.get(node.id).updateReachable();
+  })
+
+  const allNodes = [];
+
+  let y = 100;
+  const width = 40;
+  const height = 40;
+  const padding = 10;
+  let index = 0;
+  for (let i = 0; i < 10; i++) {
+    let x = 100;
+    for (let j = 0; j < 10; j++) {
+      const id = `node_${i}_${j}`;
+      const gNode = graph.addNode({
+        id,
+        x: x,
+        y: y,
+        width,
+        height,
+        label: `${index}`,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+          },
+        },
+      });
+      const node = AlgNode.create(i, j, gNode);
+      nodeMap.set(id, node);
+      index++;
+      x += width + padding;
+    }
+    y += height + padding;
+  }
+
+  // 获取邻居节点
+  const getNeighbors = (node) => {
+    const dir = [
+      [1, 0], // RIGHT
+      [0, 1], // DOWN
+      [-1, 0], // LEFT
+      [0, -1], // UP
+    ];
+    const result = [];
+    for (let i = 0; i < dir.length; i++) {
+      const [dx, dy] = dir[i];
+      // const neighbor = {x: node.x + dx, y: node.y + dy};
+      const neighbor = nodeMap.get(`node_${node.x + dx}_${node.y + dy}`);
+      if (neighbor) {
+        result.push(neighbor);
+      }
+    }
+    return result;
+  };
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  // 计算权重
+  function cost(source, target) {
+    return target.cost;
+  }
+
+  // 计算曼哈顿距离
+  function heuristic(a, b) {
+    // Manhattan distance on a square grid
+    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
+  }
+
+
+  async function greedyBestFirstSearch(source, target) {
+    const queue = new MinPQ();
+    // 首先访问第一个source
+    queue.push(source, 0);
+    // 记录最短路径
+    const cameFrom = {};
+    // 到达节点的权重
+    const costSoFar = {}
+    cameFrom[source.id] = null;
+    costSoFar[source.id] = 0;
+
+    const interval = 500;
+
+    while (!queue.isEmpty()) {
+      const current = queue.pop().element;
+      current.visited();
+      const neighbors = getNeighbors(current);
+      if (current.id === target.id) {
+        break;
+      }
+      for (const next of neighbors) {
+        const newCost = costSoFar[current.id] + 1;
+        if ( next.isReached && (!cameFrom[next.id] || newCost < costSoFar[next.id])) {
+          // f(n) = g(n) + h(n)
+          const priority = newCost +  heuristic(target.val.getBBox().center, next.val.getBBox().center)
+          costSoFar[next.id] = newCost;
+          queue.push(next, priority);
+          cameFrom[next.id] = current;
+        }
+      }
+      await sleep(interval);
+    }
+
+    const findPath = (source, target) => {
+      const path = [];
+      let current = target;
+      while (current.id !== source.id) {
+        path.push(current.val.getBBox().center);
+        current = cameFrom[current.id];
+      }
+      path.push(source.val.getBBox().center);
+
+      return path.reverse();
+    };
+
+    return findPath(source, target);
+  }
+
+
+
+  window.runSearch = async function () {
+    for (const [key, value] of nodeMap) {
+      value.reset();
+      graph.removeNode(`path_0001`)
+    }
+
+
+    const sId = document.getElementById("sourceInput").value
+    const tId = document.getElementById("targetInput").value
+    const source = nodeMap.get(sId);
+    const target = nodeMap.get(tId);
+    source.updateLabel(`S`)
+    target.updateLabel(`T`)
+    const paths = await greedyBestFirstSearch(source, target);
+
+    // const paths = findPath(target, source);
+
+    // 格式化路径信息
+    const formatPath = (paths) => {
+      let pathString = `M ${paths[0].x} ${paths[0].y}`;
+      for (let index = 1; index < paths.length; index++) {
+        pathString += ` L ${paths[index].x} ${paths[index].y}`;
+      }
+      return pathString;
+    };
+
+    graph.addNode({
+      id: `path_0001`,
+      shape: "path",
+      attrs: {
+        body: {
+          d: formatPath(paths),
+          stroke: `rgb(30,144,255)`,
+        },
+      },
+    });
+  }
+
+</script>
