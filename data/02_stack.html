@@ -1,0 +1,41 @@
+<div>
+</div>
+<script>
+    /**
+     * @description: 先进后出
+     * @return {*}
+     */    
+    class Stack {
+        constructor() {
+            this.queue = []
+        }
+
+        push(item) {
+            this.queue.push(item)
+        }
+
+        get size() {
+            return this.queue.length
+        }
+
+        isEmpty() {
+            return this.size === 0
+        }   
+
+        pop() {
+            return this.queue.pop()
+        }
+        
+    }
+
+    const stack = new Stack()
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    console.log(`pop =>`,stack.pop())
+    console.log(`pop =>`,stack.pop())
+    console.log(`pop =>`,stack.pop())
+    console.log(`pop =>`,stack.pop())
+    console.log(`isEmpty =>`,stack.isEmpty())
+
+</script>

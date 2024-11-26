@@ -1,0 +1,34 @@
+<div>
+</div>
+<script>
+    /**
+     * @description: 链表结构, 
+     * @return {*}
+     */    
+    class Node {
+        constructor(val) {
+            this.pre = null
+            this.next = null
+            this.val = val
+        }
+        
+    }
+    const header = new Node('header')
+    const node1 = new Node('node1')
+    const node2 = new Node('node2')
+    const tail = new Node('tail')   
+    header.next = node1
+    node1.pre = header
+    node1.next = node2
+    node2.pre = node1
+    node2.next = tail
+    tail.pre = node2
+
+    let current = header
+
+    while(current) {
+        console.log(`current =>`,current.val)
+        current = current.next
+    }
+
+</script>
