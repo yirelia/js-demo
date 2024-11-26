@@ -1,0 +1,39 @@
+<div>
+</div>
+<script>
+    /**
+     * @description: 先进先出队列
+     * @return {*}
+     */    
+    class Queue {
+        constructor() {
+            this.queue = []
+        }
+
+        push(item) {
+            this.queue.push(item)
+        }
+
+        get size() {
+            return this.queue.length
+        }
+
+        isEmpty() {
+            return this.size === 0
+        }   
+
+        pop() {
+            return this.queue.shift()
+        }
+        
+    }
+
+    const queue = new Queue()
+    queue.push(1)
+    queue.push(2)
+    queue.push(3)
+    console.log(`pop =>`,queue.pop())
+    console.log(`pop =>`,queue.pop())
+    console.log(`pop =>`,queue.pop())
+
+</script>
