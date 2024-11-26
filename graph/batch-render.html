@@ -1,0 +1,158 @@
+<div id="app"></div>
+<div class="option">
+  <div><span>total</span> <input id="sourceInput"></input></div>
+  <div>
+    <button onclick="runSearch()">run</button>
+    <button onclick="stop()">stop</button>
+  </div>
+
+  <div id="result"></div>
+
+</div>
+<style>
+  #app {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .option {
+    position: fixed;
+    top: 10px;
+    left: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #result {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+  }
+</style>
+<script src="../js/x6/2.18.1/index.js"></script>
+<script>
+  /**
+    *  通过 requestAnimationFrame 分批渲染封装
+    * **/
+</script>
+
+<script>
+
+  class BatchRenderer {
+    chunkTotal = 0;
+    chunkIndex = 0;
+    chunkSize = 50;
+    queue = [];
+    chunkCount = 0;
+    static isStop = false;
+
+    constructor(options = {}) {
+      this.chunkSize = options.chunkSize || 50;
+    }
+
+    stop() {
+      BatchRenderer.isStop = true;
+    }
+
+    initQueue(queue) {
+      this.queue = [...queue];
+      this.chunkTotal = queue.length;
+      this.chunkCount = Math.ceil(this.chunkTotal / this.chunkSize);
+    }  
+
+    render(fn, eventName) {
+      const resultEl = document.getElementById('result');
+      let render = 0
+      const effect = () => {
+        if (this.chunkIndex < this.chunkCount && !BatchRenderer.isStop) {
+          const startIndex = this.chunkIndex * this.chunkSize;
+          const endIndex = (this.chunkIndex + 1) * this.chunkSize;
+          const chunks = this.queue.slice(startIndex, endIndex);
+          render += chunks.length
+          fn(chunks);
+          this.chunkIndex += 1;
+          resultEl.innerHTML = `total ${this.chunkTotal} rendered: ${render}`;
+          requestAnimationFrame(effect);
+        } else {
+          if (eventName) {
+            console.log(`eventName: ${eventName}_${this.chunkTotal}`,)
+            // emitter.emit('node:added');
+            console.log(graph.getNodes().length)
+          }
+        }
+      }
+
+      effect();
+    }
+    reset() {
+      this.chunkIndex = 0;
+      this.chunkCount = 0;
+      this.chunkTotal = 0;
+      this.queue = [];
+      BatchRenderer.isStop = false;
+    }
+  }
+
+
+  let sourceId = 40;
+  document.getElementById("sourceInput").value = sourceId;
+
+
+  const graph = new X6.Graph({
+    container: document.getElementById("app"),
+    grid: true,
+    background: {
+      color: "#f5f5f5",
+    },
+    interacting: {
+      nodeMovable: false, // 禁止节点移动
+      edgeMovable: false, // 禁止边移动
+    },
+    async: false,
+  });
+
+  graph.on('node:click', ({ node }) => {
+    nodeMap.get(node.id).updateReachable();
+  })
+
+
+
+  const batchRenderer = new BatchRenderer()
+  window.runSearch = async function () {
+    graph.clearCells();
+    batchRenderer.reset()
+    const allNodes = [];
+    const totalCount = +document.getElementById('sourceInput').value
+    for (let i = 0; i < totalCount; i++) {
+      allNodes.push({
+        id: i,
+        x: Math.random() * 1000,
+        y: Math.random() * 1000,
+        width: 40,
+        height: 40,
+        label: `${i}`,
+        attrs: {
+          body: {
+            strokeWidth: 1,
+          },
+        },
+      });
+    }
+
+
+    batchRenderer.initQueue(allNodes)
+    batchRenderer.render((nodes) => {
+      graph.addNodes(nodes)
+    }, `node:added`)
+
+  }
+
+  window.stop = function () {
+    batchRenderer.stop()
+  }
+
+  window.start = function () {
+    batchRenderer.render()
+  }
+
+</script>
