@@ -1,0 +1,72 @@
+<script>
+// demo, 处理并发请求
+
+class Task {
+    constructor() {
+        this.max = 2; // 最大并发数
+        this.queue = []; // 任务队列
+        this.running = 0; // 当前正在执行的任务数
+    }
+
+    add(task) {
+        return new Promise((reslove, reject) => {
+            this.queue.push({
+                reslove,
+                reject,
+                task
+            })
+            this.run();
+        })
+    }
+    run() {
+        if (this.running >= this.max || this.queue.length === 0) {
+            return;
+        }
+
+        console.log('running', this.running);
+        this.running++;
+        const job = this.queue.shift();
+        job.task().then(job.reslove, job.reject).finally(() => {
+            this.running--;
+            this.run();
+        })
+    }
+    // 任务函数 
+
+}
+
+const task = new Task();
+
+const task1 = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 5000);
+    });
+};
+const task2 = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 3000);
+    });
+};
+    const task3 = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 1000);
+    });
+};
+
+task.add(task1).then(reslove => {
+    console.log('task1 done');
+});
+
+task.add(task2).then(reslove => {
+    console.log('task2 done');
+});
+task.add(task3).then(reslove => {
+    console.log('task3 done');
+});
+</script>
