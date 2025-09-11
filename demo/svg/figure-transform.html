@@ -1,0 +1,44 @@
+<div id="container">
+
+</div>
+<link rel="stylesheet" type="text/css" href="../../css/index.css"></link>
+<style>
+  #container {
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
+<script src="../../static/js/x6/2.18.1/index.js"></script>
+<script>
+/***
+ * svg 链式变换demo验证
+ * **/
+const container = document.getElementById('container')
+
+const graph = new X6.Graph({
+  container: container,
+  grid: true,
+})
+
+graph.addNode({
+    x: 100,
+    y: 100,
+    width: 200,
+    height:200,
+    markup: {
+        tagName: 'g',
+        selector: 'body',
+        children: [
+            // {
+            // tagName: 'rect',
+            // selector: 'rect1',
+            // },
+            // {
+            // tagName: 'rect',
+            // selector: 'rect2',
+            // },
+        ],
+    }
+})
+
+</script>
