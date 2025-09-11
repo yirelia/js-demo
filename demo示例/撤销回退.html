@@ -1,0 +1,130 @@
+<div>
+    <button id="add">添加</button>
+    <button id="undo">撤销</button>
+    <button id="rebo">重做</button>
+    <div>
+        <input id="input"/>
+    </div>
+
+    <div id="input-show"></div>
+</div>
+<script>
+/***
+ * 
+ * 命令行模式实现撤销回退
+ * */
+
+class Command {
+    // constructor() {}
+  execute() {}
+  undo() {}
+}
+
+class AddTextCommand extends Command {
+  constructor(receiver, text) {
+    super();
+    this.receiver = receiver;
+    this.text = text;
+  }
+
+  execute() {
+    this.receiver.addText(this.text);
+  }
+
+  undo() {
+    this.receiver.removeText(this.text);
+  }
+}
+
+class History {
+    undoStack = [];
+    redoStack = [];
+    size = 0; // 0 不限制
+
+    constructor(options = {}) {
+        this.size = options.size || 0;
+    }
+    
+    executeCommand(command) {
+        command.execute();
+        this.undoStack.push(command);
+        this.redoStack = []; // 清空重做栈
+        if(this.size === 0) {
+            this.undoStack.push(command);
+            return
+        }
+        if(this.undoStack.length >= this.size) {
+            this.undoStack.shift();
+        }
+
+    }
+
+    get undoStackSize() {
+        return this.undoStack.length;
+    }
+    // 撤销
+    undo() {
+        if (this.undoStackSize >0) {
+            const command = this.undoStack.pop();
+            command.undo();
+            this.redoStack.push(command);
+        } else {
+            console.log("没有更多可以撤销的操作");
+        }
+    }
+    
+    // 重做
+    redo() {
+        if (this.redoStack.length > 0) {
+            const command = this.redoStack.pop();
+            command.execute();
+            this.undoStack.push(command);
+        }
+    }
+}
+
+
+// 命令行模式 处理撤销回退
+const history = new History({size: 5});
+const addBtn = document.getElementById('add');
+const undoBtn = document.getElementById('undo');
+const reboBtn = document.getElementById('rebo');
+const input = document.getElementById('input');
+const inputShow = document.getElementById('input-show');
+
+class Receiver {
+    content = ''
+    el
+    constructor(el) {
+        this.el = el;
+    }
+    addText(text) {
+        this.content += text;
+        this.el.innerText = this.content;
+    }
+
+    removeText(text) {
+        this.content = this.content.slice(0, -text.length);
+        this.el.innerText = this.content;
+    }
+}
+
+const receiver = new Receiver(inputShow)
+
+addBtn.addEventListener('click', () => {
+    const text = input.value;
+    if(text) {
+        const command = new AddTextCommand(receiver, text);
+        history.executeCommand(command);
+        input.value = '';
+    }
+});
+
+undoBtn.addEventListener('click', () => {
+    history.undo();
+});
+
+reboBtn.addEventListener('click', () => {
+    history.redo();
+});
+</script>
