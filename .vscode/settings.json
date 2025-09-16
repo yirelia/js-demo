@@ -1,0 +1,17 @@
+{
+    // 默认格式化工具
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // 使用 Prettier 格式化 HTML
+    },
+    // 保存时自动格式化
+    "editor.formatOnSave": true,
+    // 格式化时的选项
+    "html.format.indentInnerHtml": true, // 缩进 <head> 和 <body> 内部内容
+    "html.format.wrapLineLength": 120, // 每行最大字符数
+    "html.format.wrapAttributes": "auto", // 自动换行属性
+    "html.format.preserveNewLines": true, // 保留现有的换行
+    "html.format.unformatted": "wbr", // 不格式化的标签
+    "html.format.contentUnformatted": "pre,code,textarea", // 不格式化的内容
+    "html.format.indentHandlebars": false, // 不缩进 Handlebars
+    "html.format.endWithNewline": true, // 文件末尾添加换行
+}

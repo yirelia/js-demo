@@ -1,4 +1,4 @@
-<div id="container" style="height: 100vh; width: 100vw;"></div>
+<div id="container" style="height: 100vh; width: 100vw"></div>
 
 <script type="importmap">
   {
@@ -10,99 +10,277 @@
 </script>
 
 <script type="module">
-    import * as THREE from "three";
-    import Stats from "three/addons/libs/stats.module.js";
-    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-    import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
-    import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+  import * as THREE from "three";
+  import Stats from "three/addons/libs/stats.module.js";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+  import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+  import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
+  class Light {
+    // TODO 分开 抽象类
+    constructor(player) {
+      this.player = player;
+      // --------------------------- 环境光 和点光源 ---------------------------
+      //   const ambientLight = new THREE.AmbientLight(0xffffff, 1); // 环境光，颜色和强度
+      //   this.player.getScene().add(ambientLight);
+      // 太阳光（主光源）
+      const sun = (this.sun = new THREE.DirectionalLight(0xffffff, 1.2));
+      sun.position.set(8, 12, 6); // 调高一些让阴影更自然
+      sun.castShadow = true;
+      sun.shadow.mapSize.set(2048, 2048);
+      sun.shadow.camera.near = 0.5;
+      sun.shadow.camera.far = 50;
+      sun.shadow.camera.left = -15;
+      sun.shadow.camera.right = 15;
+      sun.shadow.camera.top = 15;
+      sun.shadow.camera.bottom = -15;
+      this.player.getScene().add(sun);
 
-    const gui = new GUI();
-    const stats = new Stats();
-    container.appendChild(stats.dom);
-    // 渲染器
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xeef2f7); 
-    //---------------------------- 坐标轴辅助线 ---------------------------
-    const axesHelper = new THREE.AxesHelper(5); // 参数为坐标轴的大小
-    scene.add(axesHelper);
-
-
-    const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 100);
-    camera.position.set(100, 100, 100);
-    // --------------------------- 环境光 和点光源 ---------------------------
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1); // 环境光，颜色和强度
-    scene.add(ambientLight);
-    // 太阳光（主光源）
-    const sun = new THREE.DirectionalLight(0xffffff, 1.2);
-    sun.position.set(8, 12, 6);     // 调高一些让阴影更自然
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048);
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 50;
-    sun.shadow.camera.left = -15;
-    sun.shadow.camera.right = 15;
-    sun.shadow.camera.top = 15;
-    sun.shadow.camera.bottom = -15;
-    scene.add(sun);
-
-    const pointHelpler = new THREE.DirectionalLight(sun, 1); // 点光源辅助工具，参数为点光源和辅助工具的大小
-    scene.add(pointHelpler);
-    const lightFolder = gui.addFolder('sun Light');
-    const lightPosition = {
-        x: sun.position.x,
-        y: sun.position.y,
-        z: sun.position.z
-    };
-    lightFolder.open();
-
-
-    lightFolder.add(lightPosition, 'x', 0, 1000).onChange(value => {
-        pointLight.position.x = value;
-        pointHelpler.update(); // 更新灯光辅助工具
-    });
-    lightFolder.add(lightPosition, 'y', 0, 1000).onChange(value => {
-        pointLight.position.y = value;
-        pointHelpler.update();
-    });
-    lightFolder.add(lightPosition, 'z', 0, 1000).onChange(value => {
-        pointLight.position.z = value;
-        pointHelpler.update();
-    });
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0.5, 0);
-    controls.update();
-    controls.enablePan = false;
-    controls.enableDamping = true;
-
-    // --------------------------- 模型加载 ---------------------------
-    const loader = new OBJLoader();
-    loader.load('/static/js/three/files/train.obj', function (gltf) {
-        console.log("模型加载完成")
-        const model = gltf;
-        scene.add(model);
-        animate();
-    }, undefined, function (error) {
-        console.error(error);
-    });
-
-
-    // 动画渲染
-    function animate() {
-
-        requestAnimationFrame(animate);
-
-        controls.update();
-
-        stats.update();
-
-        renderer.render(scene, camera);
-
+      const pointHelpler = new THREE.DirectionalLightHelper(sun, 5); // 点光源辅助工具，参数为点光源和辅助工具的大小
+      this.player.getScene().add(pointHelpler);
+      this.initGui();
     }
 
+    initLightHelper() {
+      const lightFolder = gui.addFolder("sun Light");
+      const lightPosition = {
+        x: sun.position.x,
+        y: sun.position.y,
+        z: sun.position.z,
+      };
+      lightFolder.open();
+
+      lightFolder.add(lightPosition, "x", 0, 1000).onChange((value) => {
+        pointLight.position.x = value;
+        pointHelpler.update(); // 更新灯光辅助工具
+      });
+      lightFolder.add(lightPosition, "y", 0, 1000).onChange((value) => {
+        pointLight.position.y = value;
+        pointHelpler.update();
+      });
+      lightFolder.add(lightPosition, "z", 0, 1000).onChange((value) => {
+        pointLight.position.z = value;
+        pointHelpler.update();
+      });
+    }
+
+    initGui() {
+      const lightFolder = this.player.getGui().addFolder("sun Light");
+      const sun = this.sun;
+      const lightPosition = {
+        x: sun.position.x,
+        y: sun.position.y,
+        z: sun.position.z,
+      };
+      lightFolder.open();
+
+      //   lightFolder.add(lightPosition, "x", 0, 1000).onChange((value) => {
+      //     pointLight.position.x = value;
+      //     pointHelpler.update(); // 更新灯光辅助工具
+      //   });
+      //   lightFolder.add(lightPosition, "y", 0, 1000).onChange((value) => {
+      //     pointLight.position.y = value;
+      //     pointHelpler.update();
+      //   });
+      //   lightFolder.add(lightPosition, "z", 0, 1000).onChange((value) => {
+      //     pointLight.position.z = value;
+      //     pointHelpler.update();
+      //   });
+    }
+  }
+
+  class Scene {
+    constructor(player) {
+      this.player = player;
+      this.scene = new THREE.Scene(); // 场景
+      this.scene.background = new THREE.Color(0xeef2f7);
+    }
+    addHelper() {
+      //---------------------------- 坐标轴辅助线 ---------------------------
+      const axesHelper = new THREE.AxesHelper(5); // 参数为坐标轴的大小
+      this.scene.add(axesHelper);
+    }
+    getScene() {
+      return this.scene;
+    }
+    add(obj) {
+      this.scene.add(obj);
+    }
+  }
+
+  class Renderer {
+    constructor(player) {
+      this.player = player;
+      this.renderer = new THREE.WebGLRenderer({ antialias: true });
+      this.renderer.setPixelRatio(window.devicePixelRatio);
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    getRenderer() {
+      return this.renderer;
+    }
+
+    render() {
+      this.renderer.render(this.player.getScene(), this.player.getCamera());
+    }
+  }
+
+  class Camera {
+    constructor(player) {
+      this.player = player;
+      this.camera = new THREE.PerspectiveCamera(
+        100,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000
+      );
+      this.camera.position.set(-270, 70, 40);
+    }
+
+    addHelper() {
+      const cameraHelper = new THREE.CameraHelper(camera);
+      cameraHelper.visible = false;
+      this.scene.add(cameraHelper);
+    }
+    getCamera() {
+      return this.camera;
+    }
+  }
+
+  class Environment {
+    train;
+    mountain;
+    rail;
+    constructor(player) {
+      this.player = player;
+    }
+
+    async load() {
+      // TODO 提取加载器方法
+      const loader = new OBJLoader();
+      let self = this;
+      return new Promise((resolve, reject) => {
+        loader.load(
+          "/static/js/three/files/train.obj",
+          function (gltf) {
+            console.log("模型加载完成");
+            const model = gltf;
+            model.children.forEach((child) => {
+              if (child.name === "mountains") {
+                self.mountain = child;
+              } else if (child.name === `rail`) {
+                self.rail = child;
+              } else if (child.name === "train") {
+                self.train = child;
+              }
+            });
+            resolve(model);
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+          }
+        );
+      });
+    }
+
+    // 判断物体是否在相机视锥体内
+    isObjectInCameraView(object, camera) {
+      // 创建视锥体
+      const frustum = new THREE.Frustum();
+      const cameraViewProjectionMatrix = new THREE.Matrix4();
+
+      // 更新视锥体
+      cameraViewProjectionMatrix.multiplyMatrices(
+        camera.projectionMatrix,
+        camera.matrixWorldInverse
+      );
+      frustum.setFromProjectionMatrix(cameraViewProjectionMatrix);
+
+      // 获取物体的边界盒
+      const box = new THREE.Box3().setFromObject(object);
+
+      // 判断边界盒是否与视锥体相交
+      return frustum.intersectsBox(box);
+    }
+
+    getObjectSize(obj) {
+      // 创建一个 Box3 来计算对象的边界盒
+      const box = new THREE.Box3().setFromObject(obj);
+
+      // 获取边界盒的尺寸
+      const size = new THREE.Vector3();
+      return box.getSize(size);
+    }
+  }
+
+  class Player {
+    constructor(container) {
+      // gui 操作面板
+      this.gui = new GUI();
+      //   container.appendChild(stats.dom);
+
+      this.container = container;
+      //   初始化场景
+      this.scene = new Scene(this);
+      // 初始化相机
+      this.camera = new Camera(this);
+      // 初始化渲染器
+      this.renderer = new Renderer(this);
+      this.container.appendChild(this.getRenderDom());
+      //   controls
+      const controls = new OrbitControls(this.getCamera(), this.container);
+      //   controls.target.set(0, 0.5, 0);
+      controls.enablePan = true;
+      controls.enableDamping = true;
+      controls.update();
+      this.light = new Light(this);
+      this.environment = new Environment(this);
+    }
+
+    async init() {
+      // this.container.appendChild(this.stats.dom);
+      // this.container.appendChild(this.renderer.domElement);
+      this.scene.addHelper();
+      this.camera.addHelper();
+    }
+
+    getGui() {
+      return this.gui;
+    }
+    getRenderDom() {
+      return this.renderer.getRenderer().domElement;
+    }
+
+    getScene() {
+      return this.scene.getScene();
+    }
+
+    getRenderer() {
+      return this.renderer;
+    }
+
+    getCamera() {
+      return this.camera.getCamera();
+    }
+
+    async load() {
+      const model = await this.environment.load();
+      this.scene.add(model);
+      this.render();
+    }
+
+    render() {
+      this.renderer.render();
+    }
+
+    play() {
+      requestAnimationFrame(this.play);
+      this.render();
+    }
+  }
+
+  const player = new Player(document.getElementById(`container`));
+
+  player.load();
 </script>
