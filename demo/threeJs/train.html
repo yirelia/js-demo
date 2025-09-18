@@ -1,5 +1,16 @@
 <div id="container" style="height: 100vh; width: 100vw"></div>
+<div id="feature-1"></div>
+<div id="feature-2"></div>
+<div id="feature-3"></div>
 
+<style>
+  #feature-1 {
+    position: fixed;
+    left: 10px;
+    width: 200px;
+    height: 200px;
+  }
+</style>
 <script type="importmap">
   {
     "imports": {
@@ -16,13 +27,329 @@
   import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
   import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
-  class Light {
-    // TODO 分开 抽象类
-    constructor(player) {
-      this.player = player;
-      // --------------------------- 环境光 和点光源 ---------------------------
-      //   const ambientLight = new THREE.AmbientLight(0xffffff, 1); // 环境光，颜色和强度
-      //   this.player.getScene().add(ambientLight);
+  class Loader {
+    static loader = new OBJLoader();
+    static async loadModel(path) {
+      return new Promise((reslove, reject) => {
+        Loader.loader.load(
+          path,
+          function (gltf) {
+            reslove(gltf);
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+            reject(error);
+          }
+        );
+      });
+    }
+
+    static async loadTexture(path) {
+      return new Promise((reslove, reject) => {
+        new THREE.TextureLoader().load(
+          path,
+          function (texture) {
+            reslove(texture);
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+            reject(error);
+          }
+        );
+      });
+    }
+  }
+  class SceneManager {
+    renderer;
+    scene;
+    cameraController;
+    constructor(container) {
+      this.scene = new THREE.Scene();
+      this.scene.background = new THREE.Color(0xeef2f7);
+      this.renderer = new THREE.WebGLRenderer({ antialias: true });
+      this.renderer.setPixelRatio(window.devicePixelRatio);
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(this.renderer.domElement);
+      this.cameraController = new CameraController(this.scene, this.renderer);
+      this.addHelper();
+
+      // this.init(container);
+    }
+
+    addHelper() {
+      //---------------------------- 坐标轴辅助线 ---------------------------
+      const axesHelper = new THREE.AxesHelper(20); // 参数为坐标轴的大小
+      this.scene.add(axesHelper);
+    }
+    getScene() {
+      return this.scene;
+    }
+
+    add(obj) {
+      this.scene.add(obj);
+    }
+
+    // 渲染
+    render() {
+      this.renderer.render(this.scene, this.cameraController.camera);
+    }
+
+    // 更新画布大小
+    resize() {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+  }
+
+  // 相机管理
+  class CameraController {
+    // 相机的偏移量
+    cameraOffset = new THREE.Vector3(-100, 40, 100);
+    lerpPos = 0.15; // 位置平滑系数 0~1
+    lerpRot = 0.2; // 旋转平滑
+    cameraInitPosition = new THREE.Vector3(-270, 70, 40);
+    constructor(scene, renderer) {
+      this.scene = scene;
+      this.camera = new THREE.PerspectiveCamera(
+        100,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000
+      );
+      this.camera.position.copy(this.cameraInitPosition);
+      this.helper = new THREE.CameraHelper(this.camera);
+      this.helper.visible = false;
+      this.scene.add(this.helper);
+      this.controls = new OrbitControls(this.camera, renderer.domElement);
+      this.controls.enableDamping = true;
+    }
+
+    follow(target) {
+      if (target) {
+        const pos = new THREE.Vector3().setFromMatrixPosition(
+          target.matrixWorld
+        );
+
+        // 将本地方向偏移量变换到世界坐标
+        const worldOffset = this.cameraOffset
+          .clone()
+          .applyQuaternion(target.quaternion);
+        const desiredPos = pos.clone().add(worldOffset);
+        // 平滑移动与对准
+        this.camera.position.lerp(desiredPos, this.lerpPos);
+        this.camera.lookAt(pos);
+        this.helper.update();
+        this.controls.target.copy(pos);
+        this.controls.update();
+      }
+    }
+
+    getCamera() {
+      return this.camera;
+    }
+  }
+
+  class Mountain {
+    constructor() {
+      this.mountainPool = [];
+      this.count = 30;
+      // 与轨道的安全距离
+      this.safeDistance = 10;
+      this.mountainGroup = new THREE.Group();
+      this.initMountainPool();
+    }
+
+    initMountainPool() {
+      for (let i = 0; i < this.count; i++) {
+        const mountainGeometry = new THREE.ConeGeometry(5, 10, 32);
+        const mountainMaterial = new THREE.MeshStandardMaterial({
+          color: 0x228b22,
+        });
+        const mountain = new THREE.Mesh(mountainGeometry, mountainMaterial);
+        mountain.visible = false; // 初始时隐藏
+        this.mountainGroup.add(mountain);
+        this.mountainPool.push(mountain);
+      }
+    }
+
+    getAvailableMountain() {
+      for (const mountain of this.mountainPool) {
+        if (!mountain.visible) {
+          return mountain; // 返回隐藏的小山
+        }
+      }
+
+      return null; // 如果没有可用的小山，返回 null
+    }
+
+    generateMountain(train) {
+      const trainPosition = new THREE.Vector3().setFromMatrixPosition(
+        train.matrixWorld
+      );
+
+      // 获取可用的小山
+      const mountain = this.getAvailableMountain();
+      const randomDistance = Math.random() * 10 + 500; // 随机距离，范围 [20, 50]
+      if (mountain) {
+        // 设置小山的位置
+        mountain.position.set(
+          trainPosition.x + Math.random() * 100 + this.safeDistance,
+          trainPosition.y + Math.random() * 5, // 高度偏移范围 [0, 5]
+          trainPosition.z - randomDistance // 火车前方固定距离
+        );
+        mountain.visible = true; // 显示小山
+      }
+    }
+
+    updateMountains(train) {
+      const trainPosition = new THREE.Vector3().setFromMatrixPosition(
+        train.matrixWorld
+      );
+
+      for (const mountain of this.mountainPool) {
+        if (mountain.visible) {
+          // 计算小山与火车的距离
+          const distance = mountain.position.distanceTo(trainPosition);
+
+          // 如果距离超过一定范围，隐藏小山
+          if (distance > 1000) {
+            mountain.visible = false;
+          }
+        }
+      }
+    }
+
+    follow(train) {
+      this.generateMountain(train);
+      this.updateMountains(train);
+    }
+
+    addToScene(scene) {
+      scene.add(this.mountainGroup);
+    }
+  }
+
+  class Rail {
+    trackRoot = new THREE.Group();
+    seg_count = 8; // 同屏/缓存段数
+    seg_len = 20; // 轨道段长度（下面会用包围盒自动测）
+    forward = new THREE.Vector3(0, 0, 1); // 轨道前进方向
+    origin = new THREE.Vector3(0, 0, 0);
+    segments = [];
+    baseIndex = 0;
+
+    forward = new THREE.Vector3(0, 0, 1); // 轨道前进方向
+    origin = new THREE.Vector3(0, 0, 0);
+    constructor() {}
+
+    async loadRails() {
+      const rail = await Loader.loadModel("/static/js/three/files/rail.obj");
+      // 纹理未生效
+      const railTexture = await Loader.loadTexture(
+        "/static/js/three/files/Railway_Track_001_basecolor.jpg"
+      );
+      railTexture.wrapS = THREE.RepeatWrapping; // 水平方向重复
+      railTexture.wrapT = THREE.RepeatWrapping; // 垂直方向重复
+      railTexture.repeat.set(1, this.seg_count); // 根据轨道段数调整纹理重复
+
+      console.log(`纹理`, railTexture);
+      rail.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          child.material = new THREE.MeshStandardMaterial({
+            color: "red",
+            map: railTexture,
+          });
+        }
+      });
+      const box = new THREE.Box3().setFromObject(rail);
+      // 默认的前前进轴 Z; 前进轴不是Z，改这里
+      this.seg_len = box.getSize(new THREE.Vector3()).z;
+      for (let i = 0; i < this.seg_len; i++) {
+        const tile = rail.clone(true);
+        tile.matrixAutoUpdate = true;
+        const p = new THREE.Vector3()
+          .copy(this.origin) // this.origin: Vector3
+          .addScaledVector(this.forward, i * this.seg_len); // this.forward: 归一化的 Vector3
+
+        tile.position.copy(p);
+        this.trackRoot.add(tile);
+        this.segments.push(tile);
+      }
+      return this;
+    }
+
+    addToScene(scene) {
+      scene.add(this.trackRoot);
+    }
+
+    // 生成轨道
+    generateTrack(train) {
+      if (this.segments.length === 0) return;
+
+      // 列车沿 FORWARD 方向的“标量距离”
+      // d = dot( (trainPos - origin), FORWARD )
+      const trainPos = new THREE.Vector3().setFromMatrixPosition(
+        train.matrixWorld
+      );
+      const d = trainPos.clone().sub(this.origin).dot(this.forward); // 标量投影
+
+      // 车“理论所在段”的索引
+      const headIndex = Math.floor(d / this.seg_len);
+      // 每次最多搬一段，避免一帧里大幅抖动；也可改 while
+      if (headIndex - this.baseIndex > 1) {
+        const tail = this.segments.shift(); // 队头（最旧的一段）
+        this.baseIndex += 1;
+
+        // 把它移动到最前面（在当前可见段的最末端再向前推一段）
+        const newOrderIndex = this.baseIndex + this.seg_count - 1;
+        tail.position
+          .copy(this.origin)
+          .addScaledVector(this.forward, newOrderIndex * this.seg_len);
+        this.segments.push(tail); // 放回队尾
+      }
+    }
+  }
+
+  class Train {
+    constructor() {}
+
+    async load() {
+      this.train = await Loader.loadModel("/static/js/three/files/train.obj");
+    }
+
+    getTrain() {
+      return this.train;
+    }
+
+    addToScene(scene) {
+      scene.add(this.train);
+    }
+
+    moveForward(speed = 10) {
+      this.train.position.z += speed;
+    }
+  }
+  class Environment {
+    // -------- 列车运行的速度 TODO 单独配置列车？？ ----------------
+    speed = 10;
+
+    constructor(container) {
+      // 参照物
+      this.mountain = new Mountain();
+      // 轨道
+      this.rail = new Rail();
+      // 列车
+      this.train = new Train();
+      // 场景管理器
+      this.sceneManager = new SceneManager(container);
+      //  ---- 环境灯光 ----
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1); // 环境光，颜色和强度
+      this.sceneManager.add(ambientLight);
       // 太阳光（主光源）
       const sun = (this.sun = new THREE.DirectionalLight(0xffffff, 1.2));
       sun.position.set(8, 12, 6); // 调高一些让阴影更自然
@@ -34,154 +361,19 @@
       sun.shadow.camera.right = 15;
       sun.shadow.camera.top = 15;
       sun.shadow.camera.bottom = -15;
-      this.player.getScene().add(sun);
-
-      const pointHelpler = new THREE.DirectionalLightHelper(sun, 5); // 点光源辅助工具，参数为点光源和辅助工具的大小
-      this.player.getScene().add(pointHelpler);
-      this.initGui();
-    }
-
-    initLightHelper() {
-      const lightFolder = gui.addFolder("sun Light");
-      const lightPosition = {
-        x: sun.position.x,
-        y: sun.position.y,
-        z: sun.position.z,
-      };
-      lightFolder.open();
-
-      lightFolder.add(lightPosition, "x", 0, 1000).onChange((value) => {
-        pointLight.position.x = value;
-        pointHelpler.update(); // 更新灯光辅助工具
-      });
-      lightFolder.add(lightPosition, "y", 0, 1000).onChange((value) => {
-        pointLight.position.y = value;
-        pointHelpler.update();
-      });
-      lightFolder.add(lightPosition, "z", 0, 1000).onChange((value) => {
-        pointLight.position.z = value;
-        pointHelpler.update();
-      });
-    }
-
-    initGui() {
-      const lightFolder = this.player.getGui().addFolder("sun Light");
-      const sun = this.sun;
-      const lightPosition = {
-        x: sun.position.x,
-        y: sun.position.y,
-        z: sun.position.z,
-      };
-      lightFolder.open();
-
-      //   lightFolder.add(lightPosition, "x", 0, 1000).onChange((value) => {
-      //     pointLight.position.x = value;
-      //     pointHelpler.update(); // 更新灯光辅助工具
-      //   });
-      //   lightFolder.add(lightPosition, "y", 0, 1000).onChange((value) => {
-      //     pointLight.position.y = value;
-      //     pointHelpler.update();
-      //   });
-      //   lightFolder.add(lightPosition, "z", 0, 1000).onChange((value) => {
-      //     pointLight.position.z = value;
-      //     pointHelpler.update();
-      //   });
-    }
-  }
-
-  class Scene {
-    constructor(player) {
-      this.player = player;
-      this.scene = new THREE.Scene(); // 场景
-      this.scene.background = new THREE.Color(0xeef2f7);
-    }
-    addHelper() {
-      //---------------------------- 坐标轴辅助线 ---------------------------
-      const axesHelper = new THREE.AxesHelper(5); // 参数为坐标轴的大小
-      this.scene.add(axesHelper);
-    }
-    getScene() {
-      return this.scene;
-    }
-    add(obj) {
-      this.scene.add(obj);
-    }
-  }
-
-  class Renderer {
-    constructor(player) {
-      this.player = player;
-      this.renderer = new THREE.WebGLRenderer({ antialias: true });
-      this.renderer.setPixelRatio(window.devicePixelRatio);
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    getRenderer() {
-      return this.renderer;
-    }
-
-    render() {
-      this.renderer.render(this.player.getScene(), this.player.getCamera());
-    }
-  }
-
-  class Camera {
-    constructor(player) {
-      this.player = player;
-      this.camera = new THREE.PerspectiveCamera(
-        100,
-        window.innerWidth / window.innerHeight,
-        1,
-        1000
-      );
-      this.camera.position.set(-270, 70, 40);
-    }
-
-    addHelper() {
-      const cameraHelper = new THREE.CameraHelper(camera);
-      cameraHelper.visible = false;
-      this.scene.add(cameraHelper);
-    }
-    getCamera() {
-      return this.camera;
-    }
-  }
-
-  class Environment {
-    train;
-    mountain;
-    rail;
-    constructor(player) {
-      this.player = player;
+      this.sceneManager.add(sun);
+      const pointHelpler = new THREE.DirectionalLightHelper(sun, 10); // 点光源辅助工具，参数为点光源和辅助工具的大小
+      this.sceneManager.add(pointHelpler);
     }
 
     async load() {
-      // TODO 提取加载器方法
-      const loader = new OBJLoader();
-      let self = this;
-      return new Promise((resolve, reject) => {
-        loader.load(
-          "/static/js/three/files/train.obj",
-          function (gltf) {
-            console.log("模型加载完成");
-            const model = gltf;
-            model.children.forEach((child) => {
-              if (child.name === "mountains") {
-                self.mountain = child;
-              } else if (child.name === `rail`) {
-                self.rail = child;
-              } else if (child.name === "train") {
-                self.train = child;
-              }
-            });
-            resolve(model);
-          },
-          undefined,
-          function (error) {
-            console.error(error);
-          }
-        );
-      });
+      const scene = this.sceneManager.getScene();
+      await this.rail.loadRails();
+      this.rail.addToScene(scene);
+      await this.train.load();
+      this.train.addToScene(scene);
+      this.mountain.addToScene(scene);
+      return this;
     }
 
     // 判断物体是否在相机视锥体内
@@ -212,75 +404,17 @@
       const size = new THREE.Vector3();
       return box.getSize(size);
     }
-  }
-
-  class Player {
-    constructor(container) {
-      // gui 操作面板
-      this.gui = new GUI();
-      //   container.appendChild(stats.dom);
-
-      this.container = container;
-      //   初始化场景
-      this.scene = new Scene(this);
-      // 初始化相机
-      this.camera = new Camera(this);
-      // 初始化渲染器
-      this.renderer = new Renderer(this);
-      this.container.appendChild(this.getRenderDom());
-      //   controls
-      const controls = new OrbitControls(this.getCamera(), this.container);
-      //   controls.target.set(0, 0.5, 0);
-      controls.enablePan = true;
-      controls.enableDamping = true;
-      controls.update();
-      this.light = new Light(this);
-      this.environment = new Environment(this);
-    }
-
-    async init() {
-      // this.container.appendChild(this.stats.dom);
-      // this.container.appendChild(this.renderer.domElement);
-      this.scene.addHelper();
-      this.camera.addHelper();
-    }
-
-    getGui() {
-      return this.gui;
-    }
-    getRenderDom() {
-      return this.renderer.getRenderer().domElement;
-    }
-
-    getScene() {
-      return this.scene.getScene();
-    }
-
-    getRenderer() {
-      return this.renderer;
-    }
-
-    getCamera() {
-      return this.camera.getCamera();
-    }
-
-    async load() {
-      const model = await this.environment.load();
-      this.scene.add(model);
-      this.render();
-    }
-
-    render() {
-      this.renderer.render();
-    }
 
     play() {
-      requestAnimationFrame(this.play);
-      this.render();
+      requestAnimationFrame(() => this.play());
+      this.train.moveForward();
+      console.log(this.mountain.follow);
+      this.mountain.follow(this.train.getTrain());
+      this.sceneManager.cameraController.follow(this.train.getTrain());
+      this.sceneManager.render();
     }
   }
 
-  const player = new Player(document.getElementById(`container`));
-
-  player.load();
+  const environment = new Environment(document.getElementById("container"));
+  environment.load().then((env) => env.play());
 </script>
