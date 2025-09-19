@@ -1,33 +1,3 @@
-import Object3DNode from './Object3DNode.js';
-import { addNodeClass } from '../core/Node.js';
-import { nodeImmutable } from '../shadernode/ShaderNode.js';
-
-class ModelNode extends Object3DNode {
-
-	constructor( scope = ModelNode.VIEW_MATRIX ) {
-
-		super( scope );
-
-	}
-
-	update( frame ) {
-
-		this.object3d = frame.object;
-
-		super.update( frame );
-
-	}
-
-}
-
-export default ModelNode;
-
-export const modelDirection = nodeImmutable( ModelNode, ModelNode.DIRECTION );
-export const modelViewMatrix = nodeImmutable( ModelNode, ModelNode.VIEW_MATRIX ).label( 'modelViewMatrix' ).temp( 'ModelViewMatrix' );
-export const modelNormalMatrix = nodeImmutable( ModelNode, ModelNode.NORMAL_MATRIX );
-export const modelWorldMatrix = nodeImmutable( ModelNode, ModelNode.WORLD_MATRIX );
-export const modelPosition = nodeImmutable( ModelNode, ModelNode.POSITION );
-export const modelScale = nodeImmutable( ModelNode, ModelNode.SCALE );
-export const modelViewPosition = nodeImmutable( ModelNode, ModelNode.VIEW_POSITION );
-
-addNodeClass( 'ModelNode', ModelNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:48d98d7ccf6ef6f4fc3dcc2bc39c589af456565d149252ac23660299b79a3b1f
+size 1073

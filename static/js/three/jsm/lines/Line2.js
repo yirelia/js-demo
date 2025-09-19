@@ -1,19 +1,3 @@
-import { LineSegments2 } from '../lines/LineSegments2.js';
-import { LineGeometry } from '../lines/LineGeometry.js';
-import { LineMaterial } from '../lines/LineMaterial.js';
-
-class Line2 extends LineSegments2 {
-
-	constructor( geometry = new LineGeometry(), material = new LineMaterial( { color: Math.random() * 0xffffff } ) ) {
-
-		super( geometry, material );
-
-		this.isLine2 = true;
-
-		this.type = 'Line2';
-
-	}
-
-}
-
-export { Line2 };
+version https://git-lfs.github.com/spec/v1
+oid sha256:74d10bd501e6c5ac1c903860f3a8b616b877062c04d72bbeb175d417e1a7607c
+size 452

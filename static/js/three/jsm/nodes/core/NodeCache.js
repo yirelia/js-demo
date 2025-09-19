@@ -1,26 +1,3 @@
-let id = 0;
-
-class NodeCache {
-
-	constructor() {
-
-		this.id = id ++;
-		this.nodesData = new WeakMap();
-
-	}
-
-	getNodeData( node ) {
-
-		return this.nodesData.get( node );
-
-	}
-
-	setNodeData( node, data ) {
-
-		this.nodesData.set( node, data );
-
-	}
-
-}
-
-export default NodeCache;
+version https://git-lfs.github.com/spec/v1
+oid sha256:b6ff60e3eda10f9afdc028cf8a19eb219047b6ed33cea7b6fa7b5df02739e67f
+size 300

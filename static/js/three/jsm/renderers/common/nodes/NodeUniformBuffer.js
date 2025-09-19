@@ -1,23 +1,3 @@
-import UniformBuffer from '../UniformBuffer.js';
-
-let _id = 0;
-
-class NodeUniformBuffer extends UniformBuffer {
-
-	constructor( nodeUniform ) {
-
-		super( 'UniformBuffer_' + _id ++, nodeUniform ? nodeUniform.value : null );
-
-		this.nodeUniform = nodeUniform;
-
-	}
-
-	get buffer() {
-
-		return this.nodeUniform.value;
-
-	}
-
-}
-
-export default NodeUniformBuffer;
+version https://git-lfs.github.com/spec/v1
+oid sha256:390c93718d760d08e1d280ba9738fcd132fb63a3d24addb59ad10bd4c00c0fb7
+size 377

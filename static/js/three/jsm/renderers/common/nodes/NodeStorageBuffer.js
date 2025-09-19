@@ -1,23 +1,3 @@
-import StorageBuffer from '../StorageBuffer.js';
-
-let _id = 0;
-
-class NodeStorageBuffer extends StorageBuffer {
-
-	constructor( nodeUniform ) {
-
-		super( 'StorageBuffer_' + _id ++, nodeUniform ? nodeUniform.value : null );
-
-		this.nodeUniform = nodeUniform;
-
-	}
-
-	get buffer() {
-
-		return this.nodeUniform.value;
-
-	}
-
-}
-
-export default NodeStorageBuffer;
+version https://git-lfs.github.com/spec/v1
+oid sha256:3bd660fc866b21e32a0b13d3833c280957e6a9754af0f2d191c1ed804094f91a
+size 377

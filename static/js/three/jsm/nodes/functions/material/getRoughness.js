@@ -1,18 +1,3 @@
-import getGeometryRoughness from './getGeometryRoughness.js';
-import { tslFn } from '../../shadernode/ShaderNode.js';
-
-const getRoughness = tslFn( ( inputs ) => {
-
-	const { roughness } = inputs;
-
-	const geometryRoughness = getGeometryRoughness();
-
-	let roughnessFactor = roughness.max( 0.0525 ); // 0.0525 corresponds to the base mip of a 256 cubemap.
-	roughnessFactor = roughnessFactor.add( geometryRoughness );
-	roughnessFactor = roughnessFactor.min( 1.0 );
-
-	return roughnessFactor;
-
-} );
-
-export default getRoughness;
+version https://git-lfs.github.com/spec/v1
+oid sha256:2a3b8a285107ff3dcac26d16fab84dcddb2945091e1abaaa00b5fcaf49ce6c77
+size 540

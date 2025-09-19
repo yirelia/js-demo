@@ -1,32 +1,3 @@
-import InputNode from './InputNode.js';
-import { addNodeClass } from './Node.js';
-
-class ConstNode extends InputNode {
-
-	constructor( value, nodeType = null ) {
-
-		super( value, nodeType );
-
-		this.isConstNode = true;
-
-	}
-
-	generateConst( builder ) {
-
-		return builder.generateConst( this.getNodeType( builder ), this.value );
-
-	}
-
-	generate( builder, output ) {
-
-		const type = this.getNodeType( builder );
-
-		return builder.format( this.generateConst( builder ), type, output );
-
-	}
-
-}
-
-export default ConstNode;
-
-addNodeClass( 'ConstNode', ConstNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:85fa1b728f46d92a941518fe4a0b0f784a6665031b4f4cfe34cc0156aba0f818
+size 588

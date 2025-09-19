@@ -1,9 +1,3 @@
-import { tslFn } from '../../shadernode/ShaderNode.js';
-
-const BRDF_Lambert = tslFn( ( inputs ) => {
-
-	return inputs.diffuseColor.mul( 1 / Math.PI ); // punctual light
-
-} ); // validated
-
-export default BRDF_Lambert;
+version https://git-lfs.github.com/spec/v1
+oid sha256:9d2c07bcb7f16eca6d435d1a154356c38e6704f81888804b0577676343aeefb3
+size 226

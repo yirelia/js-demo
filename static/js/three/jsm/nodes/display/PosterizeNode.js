@@ -1,32 +1,3 @@
-import TempNode from '../core/TempNode.js';
-import { addNodeClass } from '../core/Node.js';
-import { addNodeElement, nodeProxy } from '../shadernode/ShaderNode.js';
-
-class PosterizeNode extends TempNode {
-
-	constructor( sourceNode, stepsNode ) {
-
-		super();
-
-		this.sourceNode = sourceNode;
-		this.stepsNode = stepsNode;
-
-	}
-
-	setup() {
-
-		const { sourceNode, stepsNode } = this;
-
-		return sourceNode.mul( stepsNode ).floor().div( stepsNode );
-
-	}
-
-}
-
-export default PosterizeNode;
-
-export const posterize = nodeProxy( PosterizeNode );
-
-addNodeElement( 'posterize', posterize );
-
-addNodeClass( 'PosterizeNode', PosterizeNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:e6121e45a0ae3c764499c9c2b3a8e02fdeb18721979d8681ffac52aed0277ecd
+size 660

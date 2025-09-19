@@ -1,26 +1,3 @@
-import { Node } from '../../../nodes/Nodes.js';
-
-class SlotNode extends Node {
-
-	constructor( params ) {
-
-		super( params.nodeType );
-
-		this.node = null;
-		this.source = null;
-		this.target = null;
-		this.inclusionType = 'replace';
-
-		Object.assign( this, params );
-
-	}
-
-	generate( builder ) {
-
-		return this.node.build( builder, this.getNodeType( builder ) );
-
-	}
-
-}
-
-export default SlotNode;
+version https://git-lfs.github.com/spec/v1
+oid sha256:a04700ab0044aeb3c0a2405ef014004183286eebc4a5fb222a8f9be91c2c1b35
+size 421

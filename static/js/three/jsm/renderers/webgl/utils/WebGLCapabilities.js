@@ -1,36 +1,3 @@
-class WebGLCapabilities {
-
-	constructor( backend ) {
-
-		this.backend = backend;
-
-		this.maxAnisotropy = null;
-
-	}
-
-	getMaxAnisotropy() {
-
-		if ( this.maxAnisotropy !== null ) return this.maxAnisotropy;
-
-		const gl = this.backend.gl;
-		const extensions = this.backend.extensions;
-
-		if ( extensions.has( 'EXT_texture_filter_anisotropic' ) === true ) {
-
-			const extension = extensions.get( 'EXT_texture_filter_anisotropic' );
-
-			this.maxAnisotropy = gl.getParameter( extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT );
-
-		} else {
-
-			this.maxAnisotropy = 0;
-
-		}
-
-		return this.maxAnisotropy;
-
-	}
-
-}
-
-export default WebGLCapabilities;
+version https://git-lfs.github.com/spec/v1
+oid sha256:fab70e1c98331f907882be28354b285441a722e02d866269a0a377a1b6e52b13
+size 664

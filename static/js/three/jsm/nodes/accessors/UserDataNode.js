@@ -1,29 +1,3 @@
-import ReferenceNode from './ReferenceNode.js';
-import { addNodeClass } from '../core/Node.js';
-import { nodeObject } from '../shadernode/ShaderNode.js';
-
-class UserDataNode extends ReferenceNode {
-
-	constructor( property, inputType, userData = null ) {
-
-		super( property, inputType, userData );
-
-		this.userData = userData;
-
-	}
-
-	update( frame ) {
-
-		this.reference = this.userData !== null ? this.userData : frame.object.userData;
-
-		super.update( frame );
-
-	}
-
-}
-
-export default UserDataNode;
-
-export const userData = ( name, inputType, userData ) => nodeObject( new UserDataNode( name, inputType, userData ) );
-
-addNodeClass( 'UserDataNode', UserDataNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:4bc803043d61f7d03dfd80d62113def24c0e19c402d027c7cd7cb842802b262e
+size 692

@@ -1,17 +1,3 @@
-import { InstancedBufferAttribute } from 'three';
-
-class StorageInstancedBufferAttribute extends InstancedBufferAttribute {
-
-	constructor( array, itemSize, typeClass = Float32Array ) {
-
-		if ( ArrayBuffer.isView( array ) === false ) array = new typeClass( array * itemSize );
-
-		super( array, itemSize );
-
-		this.isStorageInstancedBufferAttribute = true;
-
-	}
-
-}
-
-export default StorageInstancedBufferAttribute;
+version https://git-lfs.github.com/spec/v1
+oid sha256:30a3bb06f7cf3aa3c4472a878baebee0d6406bd93496b9ddd4e7b2a02dd4c604
+size 428

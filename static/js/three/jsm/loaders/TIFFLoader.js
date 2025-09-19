@@ -1,36 +1,3 @@
-import {
-	DataTextureLoader,
-	LinearFilter,
-	LinearMipmapLinearFilter
-} from 'three';
-
-import UTIF from '../libs/utif.module.js';
-
-class TIFFLoader extends DataTextureLoader {
-
-	constructor( manager ) {
-
-		super( manager );
-
-	}
-
-	parse( buffer ) {
-
-		const ifds = UTIF.decode( buffer );
-		UTIF.decodeImage( buffer, ifds[ 0 ] );
-		const rgba = UTIF.toRGBA8( ifds[ 0 ] );
-
-		return {
-			width: ifds[ 0 ].width,
-			height: ifds[ 0 ].height,
-			data: rgba,
-			flipY: true,
-			magFilter: LinearFilter,
-			minFilter: LinearMipmapLinearFilter
-		};
-
-	}
-
-}
-
-export { TIFFLoader };
+version https://git-lfs.github.com/spec/v1
+oid sha256:dbe4ac25e7a880dfb47b1fcfc44eb5b16d7c330230908ea6846f290654079e05
+size 608

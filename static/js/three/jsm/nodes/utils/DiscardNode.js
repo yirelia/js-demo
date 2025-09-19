@@ -1,27 +1,3 @@
-import CondNode from '../math/CondNode.js';
-import { expression } from '../code/ExpressionNode.js';
-import { addNodeClass } from '../core/Node.js';
-import { addNodeElement, nodeProxy } from '../shadernode/ShaderNode.js';
-
-let discardExpression;
-
-class DiscardNode extends CondNode {
-
-	constructor( condNode ) {
-
-		discardExpression = discardExpression || expression( 'discard' );
-
-		super( condNode, discardExpression );
-
-	}
-
-}
-
-export default DiscardNode;
-
-export const inlineDiscard = nodeProxy( DiscardNode );
-export const discard = ( condNode ) => inlineDiscard( condNode ).append();
-
-addNodeElement( 'discard', discard ); // @TODO: Check... this cause a little confusing using in chaining
-
-addNodeClass( 'DiscardNode', DiscardNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:d1bbc790bd11b5b05b81605fee5be57902cf76d46e99eab4953fde2ef9004fbe
+size 766

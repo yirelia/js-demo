@@ -1,35 +1,3 @@
-import Node, { addNodeClass } from '../core/Node.js';
-
-class ArrayElementNode extends Node { // @TODO: If extending from TempNode it breaks webgpu_compute
-
-	constructor( node, indexNode ) {
-
-		super();
-
-		this.node = node;
-		this.indexNode = indexNode;
-
-		this.isArrayElementNode = true;
-
-	}
-
-	getNodeType( builder ) {
-
-		return this.node.getNodeType( builder );
-
-	}
-
-	generate( builder ) {
-
-		const nodeSnippet = this.node.build( builder );
-		const indexSnippet = this.indexNode.build( builder, 'uint' );
-
-		return `${nodeSnippet}[ ${indexSnippet} ]`;
-
-	}
-
-}
-
-export default ArrayElementNode;
-
-addNodeClass( 'ArrayElementNode', ArrayElementNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:42bb1799499fc9135fa98b83eea65ef278e7dc1b0e70b27f61597efde8e78694
+size 684

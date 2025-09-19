@@ -1,33 +1,3 @@
-import { GPU_CHUNK_BYTES } from './Constants.js';
-
-function getFloatLength( floatLength ) {
-
-	// ensure chunk size alignment (STD140 layout)
-
-	return floatLength + ( ( GPU_CHUNK_BYTES - ( floatLength % GPU_CHUNK_BYTES ) ) % GPU_CHUNK_BYTES );
-
-}
-
-function getVectorLength( count, vectorLength = 4 ) {
-
-	const strideLength = getStrideLength( vectorLength );
-
-	const floatLength = strideLength * count;
-
-	return getFloatLength( floatLength );
-
-}
-
-function getStrideLength( vectorLength ) {
-
-	const strideLength = 4;
-
-	return vectorLength + ( ( strideLength - ( vectorLength % strideLength ) ) % strideLength );
-
-}
-
-export {
-	getFloatLength,
-	getVectorLength,
-	getStrideLength
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:c660675b6e5f572446a29b123873096b00e5f719d56f9536fd5463c84fee215d
+size 710

@@ -1,29 +1,3 @@
-import ReferenceNode from './ReferenceNode.js';
-import { addNodeClass } from '../core/Node.js';
-import { nodeObject } from '../shadernode/ShaderNode.js';
-
-class RendererReferenceNode extends ReferenceNode {
-
-	constructor( property, inputType, renderer = null ) {
-
-		super( property, inputType, renderer );
-
-		this.renderer = renderer;
-
-	}
-
-	updateReference( state ) {
-
-		this.reference = this.renderer !== null ? this.renderer : state.renderer;
-
-		return this.reference;
-
-	}
-
-}
-
-export default RendererReferenceNode;
-
-export const rendererReference = ( name, type, renderer ) => nodeObject( new RendererReferenceNode( name, type, renderer ) );
-
-addNodeClass( 'RendererReferenceNode', RendererReferenceNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:5d47d43197e66727d3309166c095500d7ad13309dfb1c9f03d53358292594172
+size 738

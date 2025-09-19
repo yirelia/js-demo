@@ -1,14 +1,3 @@
-export const AttributeType = {
-	VERTEX: 1,
-	INDEX: 2,
-	STORAGE: 4
-};
-
-// size of a chunk in bytes (STD140 layout)
-
-export const GPU_CHUNK_BYTES = 16;
-
-// @TODO: Move to src/constants.js
-
-export const BlendColorFactor = 211;
-export const OneMinusBlendColorFactor = 212;
+version https://git-lfs.github.com/spec/v1
+oid sha256:7015601b4609b720d8caf23a93fa02963cd66ccaa489c0242618daa5cc12cd06
+size 283

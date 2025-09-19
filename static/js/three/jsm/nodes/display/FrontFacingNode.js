@@ -1,27 +1,3 @@
-import Node, { addNodeClass } from '../core/Node.js';
-import { nodeImmutable, float } from '../shadernode/ShaderNode.js';
-
-class FrontFacingNode extends Node {
-
-	constructor() {
-
-		super( 'bool' );
-
-		this.isFrontFacingNode = true;
-
-	}
-
-	generate( builder ) {
-
-		return builder.getFrontFacing();
-
-	}
-
-}
-
-export default FrontFacingNode;
-
-export const frontFacing = nodeImmutable( FrontFacingNode );
-export const faceDirection = float( frontFacing ).mul( 2.0 ).sub( 1.0 );
-
-addNodeClass( 'FrontFacingNode', FrontFacingNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:76394ede496eaa152592371fe9cbd36f1414fd934da564967015745d7fc193df
+size 551

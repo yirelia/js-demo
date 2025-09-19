@@ -1,17 +1,3 @@
-import { tslFn } from '../shadernode/ShaderNode.js';
-
-export const getDistanceAttenuation = tslFn( ( inputs ) => {
-
-	const { lightDistance, cutoffDistance, decayExponent } = inputs;
-
-	// based upon Frostbite 3 Moving to Physically-based Rendering
-	// page 32, equation 26: E[window1]
-	// https://seblagarde.files.wordpress.com/2015/07/course_notes_moving_frostbite_to_pbr_v32.pdf
-	const distanceFalloff = lightDistance.pow( decayExponent ).max( 0.01 ).reciprocal();
-
-	return cutoffDistance.greaterThan( 0 ).cond(
-		distanceFalloff.mul( lightDistance.div( cutoffDistance ).pow4().oneMinus().clamp().pow2() ),
-		distanceFalloff
-	);
-
-} ); // validated
+version https://git-lfs.github.com/spec/v1
+oid sha256:4144476fd345f14c78efc523ee692e529ebad65a7900f6ce64a94e38d51a648d
+size 666

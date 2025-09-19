@@ -1,36 +1,3 @@
-class WebGLExtensions {
-
-	constructor( backend ) {
-
-		this.backend = backend;
-
-		this.gl = this.backend.gl;
-		this.availableExtensions = this.gl.getSupportedExtensions();
-
-		this.extensions = {};
-
-	}
-
-	get( name ) {
-
-		let extension = this.extensions[ name ];
-
-		if ( extension === undefined ) {
-
-			extension = this.gl.getExtension( name );
-
-		}
-
-		return extension;
-
-	}
-
-	has( name ) {
-
-		return this.availableExtensions.includes( name );
-
-	}
-
-}
-
-export default WebGLExtensions;
+version https://git-lfs.github.com/spec/v1
+oid sha256:589bae226916c4f393d9d41200a7fbc8dce416af9679c99cbead6a5467c53368
+size 517

@@ -1,21 +1,3 @@
-import {
-	Mesh
-} from 'three';
-import InstancedPointsGeometry from '../geometries/InstancedPointsGeometry.js';
-import InstancedPointsNodeMaterial from '../nodes/materials/InstancedPointsNodeMaterial.js';
-
-class InstancedPoints extends Mesh {
-
-	constructor( geometry = new InstancedPointsGeometry(), material = new InstancedPointsNodeMaterial() ) {
-
-		super( geometry, material );
-
-		this.isInstancedPoints = true;
-
-		this.type = 'InstancedPoints';
-
-	}
-
-}
-
-export default InstancedPoints;
+version https://git-lfs.github.com/spec/v1
+oid sha256:d482fab96fba810c8ca54b3e7c5a423fe7dddc2137670cc943c045d56fcbdb43
+size 509

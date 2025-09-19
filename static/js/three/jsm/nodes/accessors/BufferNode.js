@@ -1,30 +1,3 @@
-import UniformNode from '../core/UniformNode.js';
-import { addNodeClass } from '../core/Node.js';
-import { nodeObject } from '../shadernode/ShaderNode.js';
-
-class BufferNode extends UniformNode {
-
-	constructor( value, bufferType, bufferCount = 0 ) {
-
-		super( value, bufferType );
-
-		this.isBufferNode = true;
-
-		this.bufferType = bufferType;
-		this.bufferCount = bufferCount;
-
-	}
-
-	getInputType( /*builder*/ ) {
-
-		return 'buffer';
-
-	}
-
-}
-
-export default BufferNode;
-
-export const buffer = ( value, type, count ) => nodeObject( new BufferNode( value, type, count ) );
-
-addNodeClass( 'BufferNode', BufferNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:01a0d2ca58e8d3416ee7191da8a6e3b19aa063dd2da845be6eff31b9200a36f2
+size 642

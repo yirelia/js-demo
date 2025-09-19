@@ -1,28 +1,3 @@
-import NodeMaterial, { addNodeMaterial } from './NodeMaterial.js';
-
-import { MeshBasicMaterial } from 'three';
-
-const defaultValues = new MeshBasicMaterial();
-
-class MeshBasicNodeMaterial extends NodeMaterial {
-
-	constructor( parameters ) {
-
-		super();
-
-		this.isMeshBasicNodeMaterial = true;
-
-		this.lights = false;
-		//this.normals = false; @TODO: normals usage by context
-
-		this.setDefaultValues( defaultValues );
-
-		this.setValues( parameters );
-
-	}
-
-}
-
-export default MeshBasicNodeMaterial;
-
-addNodeMaterial( 'MeshBasicNodeMaterial', MeshBasicNodeMaterial );
+version https://git-lfs.github.com/spec/v1
+oid sha256:ae8df76655a86e3927a512e570c7d493a4c09663365d45241ac055e06ecb6152
+size 593

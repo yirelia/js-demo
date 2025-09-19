@@ -1,25 +1,3 @@
-import { SpotLight } from 'three';
-
-class IESSpotLight extends SpotLight {
-
-	constructor( color, intensity, distance, angle, penumbra, decay ) {
-
-		super( color, intensity, distance, angle, penumbra, decay );
-
-		this.iesMap = null;
-
-	}
-
-	copy( source, recursive ) {
-
-		super.copy( source, recursive );
-
-		this.iesMap = source.iesMap;
-
-		return this;
-
-	}
-
-}
-
-export default IESSpotLight;
+version https://git-lfs.github.com/spec/v1
+oid sha256:11a5eee940ec839e79ddd009f6a55df094a0fce7cdb0fad535798c3c6032e72e
+size 412

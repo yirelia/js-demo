@@ -1,13 +1,3 @@
-import { normalGeometry } from '../../accessors/NormalNode.js';
-import { tslFn } from '../../shadernode/ShaderNode.js';
-
-const getGeometryRoughness = tslFn( () => {
-
-	const dxy = normalGeometry.dFdx().abs().max( normalGeometry.dFdy().abs() );
-	const geometryRoughness = dxy.x.max( dxy.y ).max( dxy.z );
-
-	return geometryRoughness;
-
-} );
-
-export default getGeometryRoughness;
+version https://git-lfs.github.com/spec/v1
+oid sha256:933dcb103a11d572f6e335f6061bcf2981ed7bbc8eaeb5520b27d5d11ca31d71
+size 388

@@ -1,33 +1,3 @@
-import { addNodeClass } from './Node.js';
-import { nodeObject } from '../shadernode/ShaderNode.js';
-import PropertyNode from './PropertyNode.js';
-
-class ParameterNode extends PropertyNode {
-
-	constructor( nodeType, name = null ) {
-
-		super( nodeType, name );
-
-		this.isParameterNode = true;
-
-	}
-
-	getHash() {
-
-		return this.uuid;
-
-	}
-
-	generate() {
-
-		return this.name;
-
-	}
-
-}
-
-export default ParameterNode;
-
-export const parameter = ( type, name ) => nodeObject( new ParameterNode( type, name ) );
-
-addNodeClass( 'ParameterNode', ParameterNode );
+version https://git-lfs.github.com/spec/v1
+oid sha256:94683716cc35ef54c0721bbe85267ab6c34f2e541d9a550b16dcc35edef6734b
+size 581

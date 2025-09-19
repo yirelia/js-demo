@@ -1,33 +1,3 @@
-import { vec4, NodeMaterial } from '../../nodes/Nodes.js';
-import QuadMesh from '../../objects/QuadMesh.js';
-
-const quadMesh = new QuadMesh( new NodeMaterial() );
-
-class PostProcessing {
-
-	constructor( renderer, outputNode = vec4( 0, 0, 1, 1 ) ) {
-
-		this.renderer = renderer;
-		this.outputNode = outputNode;
-
-	}
-
-	render() {
-
-		quadMesh.material.fragmentNode = this.outputNode;
-
-		quadMesh.render( this.renderer );
-
-	}
-
-	renderAsync() {
-
-		quadMesh.material.fragmentNode = this.outputNode;
-
-		return quadMesh.renderAsync( this.renderer );
-
-	}
-
-}
-
-export default PostProcessing;
+version https://git-lfs.github.com/spec/v1
+oid sha256:8f7a19ff8f1e28d2ed5eff97ce5b869cb2ca7f090788d9938cfa3a6953962b4d
+size 612

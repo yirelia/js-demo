@@ -1,15 +1,3 @@
-class NodeCode {
-
-	constructor( name, type, code = '' ) {
-
-		this.name = name;
-		this.type = type;
-		this.code = code;
-
-		Object.defineProperty( this, 'isNodeCode', { value: true } );
-
-	}
-
-}
-
-export default NodeCode;
+version https://git-lfs.github.com/spec/v1
+oid sha256:c68476600eccd30f3989d73112391efc494bcb9bb62144bb62a2296a4bc8c91a
+size 232

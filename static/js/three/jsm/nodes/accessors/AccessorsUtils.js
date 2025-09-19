@@ -1,10 +1,3 @@
-import { bitangentView } from './BitangentNode.js';
-import { normalView } from './NormalNode.js';
-import { tangentView } from './TangentNode.js';
-import { mat3 } from '../shadernode/ShaderNode.js';
-import { positionViewDirection } from './PositionNode.js';
-
-export const TBNViewMatrix = mat3( tangentView, bitangentView, normalView );
-
-export const parallaxDirection = positionViewDirection.mul( TBNViewMatrix )/*.normalize()*/;
-export const parallaxUV = ( uv, scale ) => uv.sub( parallaxDirection.mul( scale ) );
+version https://git-lfs.github.com/spec/v1
+oid sha256:a2f2ae39ababdee3eaa927f5372d47ce68b569e6b2cda885893fd09fc93ee654
+size 524

@@ -1,13 +1,3 @@
-import DFGApprox from './DFGApprox.js';
-import { tslFn } from '../../shadernode/ShaderNode.js';
-
-const EnvironmentBRDF = tslFn( ( inputs ) => {
-
-	const { dotNV, specularColor, specularF90, roughness } = inputs;
-
-	const fab = DFGApprox( { dotNV, roughness } );
-	return specularColor.mul( fab.x ).add( specularF90.mul( fab.y ) );
-
-} );
-
-export default EnvironmentBRDF;
+version https://git-lfs.github.com/spec/v1
+oid sha256:dc6e32cac52f3e9555e628f5ec6313cc66fcd7a73db0c8ad2625f79d059407c2
+size 380
