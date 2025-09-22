@@ -1,0 +1,636 @@
+父级：
+{
+    "id": "inverseBlockConstraints",
+    "shape": "CustomNode",
+    "x": -28,
+    "y": -146,
+    "width": 200,
+    "height": 100,
+    "visible": true,
+    "markup": [
+        {
+            "tagName": "rect",
+            "selector": "body",
+            "attrs": {},
+            "isEmptySubShapes": false
+        },
+        {
+            "tagName": "path",
+            "selector": "129112ac-c4b7-45d6-b857-84f75a51f0b8",
+            "visible": true,
+            "attrs": {
+                "d": "M90,0 L100,0",
+                "fill": "none",
+                "stroke": "#00007f",
+                "strokeWidth": 0.94,
+                "strokeDasharray": "0",
+                "transform": "rotate(0, 0, 0) translate(0,0) scale(1,1) translate(0,0) rotate(0, 0, 0)",
+                "markerEnd": "url(#none)",
+                "markerStart": "url(#none)",
+                "magnet": false
+            }
+        },
+        {
+            "tagName": "path",
+            "selector": "de75a816-f525-49f2-9279-5d5edf4d3707",
+            "visible": true,
+            "attrs": {
+                "d": "M-100,0 L-90,0",
+                "fill": "none",
+                "stroke": "#00007f",
+                "strokeWidth": 0.94,
+                "strokeDasharray": "0",
+                "transform": "rotate(0, 0, 0) translate(0,0) scale(1,1) translate(0,0) rotate(0, 0, 0)",
+                "markerEnd": "url(#none)",
+                "markerStart": "url(#none)",
+                "magnet": false
+            }
+        },
+        {
+            "tagName": "path",
+            "selector": "0ea10abc-1f99-464e-a1fc-3931ed9e1327",
+            "visible": true,
+            "attrs": {
+                "d": "M-95,-50.00000000000001 L95,-50.00000000000001 L95,50.00000000000001 L-95,50.00000000000001Z",
+                "fill": "transparent",
+                "stroke": "#878787",
+                "strokeWidth": 0.94,
+                "strokeDasharray": "0",
+                "transform": "rotate(0, 0, 0) translate(0,0) scale(1,1) translate(0,0) rotate(0, 0, 0)",
+                "opacity": 1,
+                "magnet": false
+            }
+        },
+        {
+            "tagName": "rect",
+            "selector": "top-left-corner",
+            "groupSelector": "node-corner",
+            "attrs": {
+                "width": 8,
+                "height": 8,
+                "x": -104,
+                "y": -54,
+                "className": "corner",
+                "data-selector": "top-left-corner"
+            }
+        },
+        {
+            "tagName": "rect",
+            "selector": "top-right-corner",
+            "groupSelector": "node-corner",
+            "attrs": {
+                "width": 8,
+                "height": 8,
+                "x": 96,
+                "y": -54,
+                "className": "corner",
+                "data-selector": "top-right-corner"
+            }
+        },
+        {
+            "tagName": "rect",
+            "selector": "bottom-left-corner",
+            "groupSelector": "node-corner",
+            "attrs": {
+                "width": 8,
+                "height": 8,
+                "x": -104,
+                "y": 46,
+                "className": "corner",
+                "data-selector": "bottom-left-corner"
+            }
+        },
+        {
+            "tagName": "rect",
+            "selector": "bottom-right-corner",
+            "groupSelector": "node-corner",
+            "attrs": {
+                "width": 8,
+                "height": 8,
+                "x": 96,
+                "y": 46,
+                "className": "corner",
+                "data-selector": "bottom-right-corner"
+            }
+        }
+    ],
+    "attrs": {
+        "node-corner": {
+            "fill": "transparent",
+            "stroke": "transparent"
+        },
+        "body": {
+            "fill": "transparent",
+            "stroke": "transparent",
+            "opacity": 0.8,
+            "width": 200,
+            "height": 100,
+            "x": -100,
+            "y": -50
+        }
+    },
+    "data": {
+        "id": "inverseBlockConstraints",
+        "name": "inverseBlockConstraints",
+        "classname": "Modelica.Blocks.Math.InverseBlockConstraints",
+        "restriction": "block",
+        "modelType": "user",
+        "nodeType": "component",
+        "elementType": "Diagram",
+        "isInherited": false
+    },
+    "ports": {
+        "items": [],
+        "groups": {}
+    },
+    "zIndex": 2
+}
+四个端口：
+inverseBlockConstraints.u1：
+{
+    "id": "inverseBlockConstraints.u1;extendNameBase=",
+    "shape": "CustomNode",
+    "x": -138,
+    "y": -146,
+    "width": 40,
+    "height": 40,
+    "visible": true,
+    "markup": [
+        {
+            "tagName": "polygon",
+            "selector": "4a484aa1-8e9c-433d-bc2c-7cb796e42372",
+            "visible": true,
+            "attrs": {
+                "points": "-10,-8.333333333333334 10,0 -10,8.333333333333334 ",
+                "fill": "#00007f",
+                "stroke": "#00007f",
+                "strokeWidth": 0.94,
+                "transform": "rotate(0, 0, 0) scale(1,1)",
+                "magnet": true
+            }
+        }
+    ],
+    "attrs": {
+        "node-corner": {
+            "fill": "transparent",
+            "stroke": "transparent"
+        }
+    },
+    "data": {
+        "id": "inverseBlockConstraints.u1;extendNameBase=",
+        "name": "u1",
+        "classname": "Modelica.Blocks.Interfaces.RealInput",
+        "parentId": "inverseBlockConstraints",
+        "restriction": "connector",
+        "modelType": "user",
+        "nodeType": "component",
+        "elementType": "Connector",
+        "isInherited": false
+    },
+    "ports": {
+        "items": [
+            {
+                "id": "origin-point",
+                "group": "fixed"
+            }
+        ],
+        "groups": {
+            "fixed": {
+                "position": {
+                    "name": "absolute",
+                    "args": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                "attrs": {
+                    "circle": {
+                        "r": 0,
+                        "fill": "transparent",
+                        "stroke": "transparent",
+                        "pointerEvents": "none"
+                    }
+                }
+            }
+        }
+    },
+    "zIndex": 4
+}
+
+
+inverseBlockConstraints.u2：
+{
+    "id": "inverseBlockConstraints.u2;extendNameBase=",
+    "shape": "CustomNode",
+    "x": -108,
+    "y": -146,
+    "width": 40,
+    "height": 40,
+    "visible": true,
+    "markup": [
+        {
+            "tagName": "polygon",
+            "selector": "f00be1f7-9447-44a1-a7fd-f5d5437921fd",
+            "visible": true,
+            "attrs": {
+                "points": "-10,-8.333333333333334 10,0 -10,8.333333333333334 ",
+                "fill": "#00007f",
+                "stroke": "#00007f",
+                "strokeWidth": 0.94,
+                "transform": "rotate(0, 0, 0) scale(-1,1)",
+                "magnet": true
+            }
+        }
+    ],
+    "attrs": {
+        "node-corner": {
+            "fill": "transparent",
+            "stroke": "transparent"
+        }
+    },
+    "data": {
+        "id": "inverseBlockConstraints.u2;extendNameBase=",
+        "name": "u2",
+        "classname": "Modelica.Blocks.Interfaces.RealInput",
+        "parentId": "inverseBlockConstraints",
+        "restriction": "connector",
+        "modelType": "user",
+        "nodeType": "component",
+        "elementType": "Connector",
+        "isInherited": false
+    },
+    "ports": {
+        "items": [
+            {
+                "id": "origin-point",
+                "group": "fixed"
+            }
+        ],
+        "groups": {
+            "fixed": {
+                "position": {
+                    "name": "absolute",
+                    "args": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                "attrs": {
+                    "circle": {
+                        "r": 0,
+                        "fill": "transparent",
+                        "stroke": "transparent",
+                        "pointerEvents": "none"
+                    }
+                }
+            }
+        }
+    },
+    "zIndex": 4
+}
+
+inverseBlockConstraints.y1：
+{
+    "id": "inverseBlockConstraints.y1;extendNameBase=",
+    "shape": "CustomNode",
+    "x": 77,
+    "y": -146,
+    "width": 20,
+    "height": 20,
+    "visible": true,
+    "markup": [
+        {
+            "tagName": "polygon",
+            "selector": "b0d9bbc4-0f69-462c-bd88-7e56d4dfc145",
+            "visible": true,
+            "attrs": {
+                "points": "-5,-4.166666666666667 5,0 -5,4.166666666666667 ",
+                "fill": "#ffffff",
+                "stroke": "#00007f",
+                "strokeWidth": 0.94,
+                "transform": "rotate(0, 0, 0) scale(1,1)",
+                "magnet": true
+            }
+        }
+    ],
+    "attrs": {
+        "node-corner": {
+            "fill": "transparent",
+            "stroke": "transparent"
+        }
+    },
+    "data": {
+        "id": "inverseBlockConstraints.y1;extendNameBase=",
+        "name": "y1",
+        "classname": "Modelica.Blocks.Interfaces.RealOutput",
+        "parentId": "inverseBlockConstraints",
+        "restriction": "connector",
+        "modelType": "user",
+        "nodeType": "component",
+        "elementType": "Connector",
+        "isInherited": false
+    },
+    "ports": {
+        "items": [
+            {
+                "id": "origin-point",
+                "group": "fixed"
+            }
+        ],
+        "groups": {
+            "fixed": {
+                "position": {
+                    "name": "absolute",
+                    "args": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                "attrs": {
+                    "circle": {
+                        "r": 0,
+                        "fill": "transparent",
+                        "stroke": "transparent",
+                        "pointerEvents": "none"
+                    }
+                }
+            }
+        }
+    },
+    "zIndex": 4
+}
+
+inverseBlockConstraints.y2：
+{
+    "id": "inverseBlockConstraints.y2;extendNameBase=",
+    "shape": "CustomNode",
+    "x": 57,
+    "y": -146,
+    "width": 20,
+    "height": 20,
+    "visible": true,
+    "markup": [
+        {
+            "tagName": "polygon",
+            "selector": "6bed5b9b-59f6-48ea-b344-9ce687048549",
+            "visible": true,
+            "attrs": {
+                "points": "-5,-4.166666666666667 5,0 -5,4.166666666666667 ",
+                "fill": "#ffffff",
+                "stroke": "#00007f",
+                "strokeWidth": 0.94,
+                "transform": "rotate(0, 0, 0) scale(-1,1)",
+                "magnet": true
+            }
+        }
+    ],
+    "attrs": {
+        "node-corner": {
+            "fill": "transparent",
+            "stroke": "transparent"
+        }
+    },
+    "data": {
+        "id": "inverseBlockConstraints.y2;extendNameBase=",
+        "name": "y2",
+        "classname": "Modelica.Blocks.Interfaces.RealOutput",
+        "parentId": "inverseBlockConstraints",
+        "restriction": "connector",
+        "modelType": "user",
+        "nodeType": "component",
+        "elementType": "Connector",
+        "isInherited": false
+    },
+    "ports": {
+        "items": [
+            {
+                "id": "origin-point",
+                "group": "fixed"
+            }
+        ],
+        "groups": {
+            "fixed": {
+                "position": {
+                    "name": "absolute",
+                    "args": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                "attrs": {
+                    "circle": {
+                        "r": 0,
+                        "fill": "transparent",
+                        "stroke": "transparent",
+                        "pointerEvents": "none"
+                    }
+                }
+            }
+        }
+    },
+    "zIndex": 4
+}
+
+原始数据：
+{
+  "classname": "Modelica.Blocks.Math.InverseBlockConstraints",
+  "comment": "Construct inverse model by requiring that two inputs and two outputs are identical",
+  "connectors": [
+    {
+      "classname": "Modelica.Blocks.Interfaces.RealInput",
+      "comment": "Input signal 1 (u1 = u2)",
+      "condition": "",
+      "coordinateSystem": {
+        "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+        "initialScale": "0.2",
+        "preserveAspectRatio": "true"
+      },
+      "direction": "input",
+      "extendNameBase": "",
+      "extent": "{{-240,-20},{-200,20}}",
+      "iconTransformation": "true",
+      "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+      "name": "u1",
+      "outputType": "",
+      "parentName": "inverseBlockConstraints",
+      "protected": false,
+      "restriction": "connector",
+      "subShapes": [
+        {
+          "fillColor": "{0,0,127}",
+          "fillPattern": "FillPattern.Solid",
+          "id": "4a484aa1-8e9c-433d-bc2c-7cb796e42372",
+          "lineColor": "{0,0,127}",
+          "name": "Polygon",
+          "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+        }
+      ],
+      "type": {
+        "classname": "Modelica.Blocks.Interfaces.RealInput",
+        "name": "u1",
+        "restriction": "connector",
+        "direction": "input",
+        "elements": [],
+        "extends": [],
+        "type": "Real"
+      },
+      "typeDimension": ""
+    },
+    {
+      "classname": "Modelica.Blocks.Interfaces.RealInput",
+      "comment": "Input signal 2 (u1 = u2)",
+      "condition": "",
+      "coordinateSystem": {
+        "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+        "initialScale": "0.2",
+        "preserveAspectRatio": "true"
+      },
+      "direction": "input",
+      "extendNameBase": "",
+      "extent": "{{-140,-20},{-180,20}}",
+      "iconTransformation": "true",
+      "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+      "name": "u2",
+      "outputType": "",
+      "parentName": "inverseBlockConstraints",
+      "protected": false,
+      "restriction": "connector",
+      "subShapes": [
+        {
+          "fillColor": "{0,0,127}",
+          "fillPattern": "FillPattern.Solid",
+          "id": "f00be1f7-9447-44a1-a7fd-f5d5437921fd",
+          "lineColor": "{0,0,127}",
+          "name": "Polygon",
+          "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+        }
+      ],
+      "type": {
+        "classname": "Modelica.Blocks.Interfaces.RealInput",
+        "name": "u2",
+        "restriction": "connector",
+        "direction": "input",
+        "elements": [],
+        "extends": [],
+        "type": "Real"
+      },
+      "typeDimension": ""
+    },
+    {
+      "classname": "Modelica.Blocks.Interfaces.RealOutput",
+      "comment": "Output signal 1 (y1 = y2)",
+      "condition": "",
+      "coordinateSystem": {
+        "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+        "preserveAspectRatio": "true"
+      },
+      "direction": "output",
+      "extendNameBase": "",
+      "extent": "{{200,-10},{220,10}}",
+      "iconTransformation": "true",
+      "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+      "name": "y1",
+      "outputType": "",
+      "parentName": "inverseBlockConstraints",
+      "protected": false,
+      "restriction": "connector",
+      "subShapes": [
+        {
+          "fillColor": "{255,255,255}",
+          "fillPattern": "FillPattern.Solid",
+          "id": "b0d9bbc4-0f69-462c-bd88-7e56d4dfc145",
+          "lineColor": "{0,0,127}",
+          "name": "Polygon",
+          "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+        }
+      ],
+      "type": {
+        "classname": "Modelica.Blocks.Interfaces.RealOutput",
+        "name": "y1",
+        "restriction": "connector",
+        "direction": "output",
+        "elements": [],
+        "extends": [],
+        "type": "Real"
+      },
+      "typeDimension": ""
+    },
+    {
+      "classname": "Modelica.Blocks.Interfaces.RealOutput",
+      "comment": "Output signal 2 (y1 = y2)",
+      "condition": "",
+      "coordinateSystem": {
+        "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+        "preserveAspectRatio": "true"
+      },
+      "direction": "output",
+      "extendNameBase": "",
+      "extent": "{{180,-10},{160,10}}",
+      "iconTransformation": "true",
+      "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+      "name": "y2",
+      "outputType": "",
+      "parentName": "inverseBlockConstraints",
+      "protected": false,
+      "restriction": "connector",
+      "subShapes": [
+        {
+          "fillColor": "{255,255,255}",
+          "fillPattern": "FillPattern.Solid",
+          "id": "6bed5b9b-59f6-48ea-b344-9ce687048549",
+          "lineColor": "{0,0,127}",
+          "name": "Polygon",
+          "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+        }
+      ],
+      "type": {
+        "classname": "Modelica.Blocks.Interfaces.RealOutput",
+        "name": "y2",
+        "restriction": "connector",
+        "direction": "output",
+        "elements": [],
+        "extends": [],
+        "type": "Real"
+      },
+      "typeDimension": ""
+    }
+  ],
+  "coordinateSystem": {
+    "extent": "{{-200,-120},{200,\n              120}}",
+    "preserveAspectRatio": "false"
+  },
+  "direction": "",
+  "extent": "{{-10,20},{30,40}}",
+  "modelName": "",
+  "name": "inverseBlockConstraints",
+  "origin": "{-15.7,-0.7}",
+  "outputType": "",
+  "parentName": "",
+  "restriction": "block",
+  "subShapes": [
+    {
+      "color": "{0,0,127}",
+      "id": "129112ac-c4b7-45d6-b857-84f75a51f0b8",
+      "name": "Line",
+      "points": "{{180,0},{200,0}}"
+    },
+    {
+      "color": "{0,0,127}",
+      "id": "de75a816-f525-49f2-9279-5d5edf4d3707",
+      "name": "Line",
+      "points": "{{-200,0},{-180,0}}"
+    },
+    {
+      "extent": "{{-190,120},{190,-120}}",
+      "id": "0ea10abc-1f99-464e-a1fc-3931ed9e1327",
+      "lineColor": "{135,135,135}",
+      "name": "Rectangle"
+    }
+  ],
+  "transformation": "true",
+  "type": "",
+  "typeDimension": "",
+  "visibleList": null
+}
+
+
