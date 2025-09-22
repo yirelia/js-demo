@@ -37,3 +37,14 @@ git repack -Ad
 # 4) 强推（用 --force-with-lease 更安全）
 git push --force-with-lease origin feat/train
 ```
+# 算法demo 示例
+
+# 运行
+1. 安装http-server
+```bash
+ npm i http-server -g
+```
+2. 运行server服务
+```bash
+http-server
+```
