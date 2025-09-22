@@ -33,22 +33,33 @@ onMounted(() => {
         },
         {
           tagName: 'g',
+          attrs: {
+            transform: 'translate(-550 0) scale(-1 1) translate(550 0)'
+          },
           children: [
             {
               tagName: 'rect',
               attrs: {
                 x: -600,
-                y:               
+                y: -50,
+                width: 100,
+                height: 100,
               }
-            }
+            },
+            {
+              tagName: 'path',
+              attrs: {
+                d: 'M -500 -50 L -600 0 L -500 50',
+                stroke: 'red',
+                fill: 'none'
+              }
+            },
           ],
-          attrs: {
 
-          }
         }
       ],
       attrs: {
-        transform: `rotate(90)`
+        transform: `scale(1 -1) rotate(90)`,
       }
     }
   })
