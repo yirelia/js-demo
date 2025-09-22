@@ -596,7 +596,7 @@ inverseBlockConstraints.y2：
     }
   ],
   "coordinateSystem": {
-    "extent": "{{-200,-120},{200,\n              120}}",
+    "extent": "{{-200,-120},{200,\n120}}",
     "preserveAspectRatio": "false"
   },
   "direction": "",
