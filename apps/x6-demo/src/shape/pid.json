@@ -1,0 +1,2245 @@
+[
+    {
+        "classname": "Modelica.Blocks.Continuous.LimPID",
+        "comment": "P, PI, PD, and PID controller with limited output, anti-windup compensation, setpoint weighting and optional feed-forward",
+        "connectors": [
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "comment": "Connector of setpoint input signal",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "Modelica.Blocks.Interfaces.SVcontrol",
+                "extent": "{{-140,-20},{-100,20}}",
+                "modelName": "Modelica.Blocks.Interfaces.SVcontrol",
+                "name": "u_s",
+                "outputType": "",
+                "parentName": "PI",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{0,0,127}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "fe0892cc-c230-419e-a711-840761a80509",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealInput",
+                    "name": "u_s",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "comment": "Connector of measurement input signal",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "Modelica.Blocks.Interfaces.SVcontrol",
+                "extent": "{{20,-20},{-20,20}}",
+                "modelName": "Modelica.Blocks.Interfaces.SVcontrol",
+                "name": "u_m",
+                "origin": "{0,-120}",
+                "outputType": "",
+                "parentName": "PI",
+                "protected": false,
+                "restriction": "connector",
+                "rotation": "270",
+                "subShapes": [
+                    {
+                        "fillColor": "{0,0,127}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "ea6d70e5-0a62-4567-a34b-104573142075",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealInput",
+                    "name": "u_m",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                "comment": "Connector of actuator output signal",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "output",
+                "extendNameBase": "Modelica.Blocks.Interfaces.SVcontrol",
+                "extent": "{{100,-10},{120,10}}",
+                "modelName": "Modelica.Blocks.Interfaces.SVcontrol",
+                "name": "y",
+                "outputType": "",
+                "parentName": "PI",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "f94532cf-1069-403a-8bf7-213dfe6dd122",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                    "name": "y",
+                    "restriction": "connector",
+                    "direction": "output",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "comment": "Optional connector of feed-forward input signal",
+                "condition": "if withFeedForward",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "",
+                "extent": "{{20,-20},{-20,20}}",
+                "modelName": "Modelica.Blocks.Continuous.LimPID",
+                "name": "u_ff",
+                "origin": "{60,-120}",
+                "outputType": "",
+                "parentName": "PI",
+                "protected": false,
+                "restriction": "connector",
+                "rotation": "270",
+                "subShapes": [
+                    {
+                        "fillColor": "{0,0,127}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "df88292d-c7ea-4128-8a1f-6185375fb0a9",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealInput",
+                    "name": "u_ff",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{100,100}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{-56,-20},{-36,0}}",
+        "modelName": "",
+        "name": "PI",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "block",
+        "subShapes": [
+            {
+                "extent": "{{-100,-100},{100,100}}",
+                "fillColor": "{255,255,255}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "e5e5cdfd-b511-48b8-9f22-6828dec238f3",
+                "lineColor": "{0,0,127}",
+                "name": "Rectangle"
+            },
+            {
+                "extent": "{{-150,150},{150,110}}",
+                "id": "f0926ac6-0b5a-4af2-b1fe-adcc7f2b712a",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "c5f2e4da-0fbd-4a9d-887e-9864084751e1",
+                "name": "Line",
+                "points": "{{-80,78},{-80,-90}}"
+            },
+            {
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "80ce20ed-597c-4fc1-9128-e169ebfacd60",
+                "lineColor": "{192,192,192}",
+                "name": "Polygon",
+                "points": "{{-80,90},{-88,68},{-72,68},{-80,90}}"
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "c70c1835-00cd-416b-82c6-062f9849820c",
+                "name": "Line",
+                "points": "{{-90,-80},{82,-80}}"
+            },
+            {
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "fe8c2b32-0813-4e27-92ad-1015688a0249",
+                "lineColor": "{192,192,192}",
+                "name": "Polygon",
+                "points": "{{90,-80},{68,-72},{68,-88},{90,-80}}"
+            },
+            {
+                "color": "{0,0,127}",
+                "id": "e4106b8f-acdd-49ae-9ed1-270beb47fc31",
+                "name": "Line",
+                "points": "{{-80,-80},{-80,-20},{30,60},{80,60}}"
+            },
+            {
+                "extent": "{{-20,-20},{80,-60}}",
+                "id": "b9a5aca8-676b-4e19-b5c2-bc670abb4161",
+                "name": "Text",
+                "textColor": "{192,192,192}",
+                "textString": "\"%controllerType\""
+            },
+            {
+                "color": "{255,0,0}",
+                "id": "e62597a8-4b72-47c4-ada0-bdca1531ced7",
+                "name": "Line",
+                "points": "{{30,60},{81,60}}",
+                "visible": "strict"
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Mechanics.Rotational.Components.Inertia",
+        "comment": "1D-rotational component with inertia",
+        "connectors": [
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                "comment": "Flange of left shaft",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "extent": "{{-110,-10},{-90,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "name": "flange_a",
+                "outputType": "",
+                "parentName": "inertia1",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "d9bfa647-e389-4b80-b9ed-cb64fdfea437",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                    "name": "flange_a",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": "",
+                "rotation": "90"
+            },
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                "comment": "Flange of right shaft",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "extent": "{{90,-10},{110,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "name": "flange_b",
+                "outputType": "",
+                "parentName": "inertia1",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "691f707b-7a22-4397-9b08-91086d543aa4",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                    "name": "flange_b",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{2,-20},\n              {22,0}}",
+        "modelName": "",
+        "name": "inertia1",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "model",
+        "subShapes": [
+            {
+                "extent": "{{-100.0,-10.0},{-50.0,10.0}}",
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.HorizontalCylinder",
+                "id": "1140558f-5b8e-46cb-9cad-4670fba7af5a",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle"
+            },
+            {
+                "extent": "{{50.0,-10.0},{100.0,10.0}}",
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.HorizontalCylinder",
+                "id": "11a43d07-9df0-4afd-b049-f0c7baf22b69",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle"
+            },
+            {
+                "id": "f0db6b22-1e98-4071-9fc2-08ac6eee5b2d",
+                "name": "Line",
+                "points": "{{-80.0,-25.0},{-60.0,-25.0}}"
+            },
+            {
+                "id": "a42e77d4-ead1-4942-830c-db444f45967f",
+                "name": "Line",
+                "points": "{{60.0,-25.0},{80.0,-25.0}}"
+            },
+            {
+                "id": "04345f16-5598-4fad-b502-08d61f7ef972",
+                "name": "Line",
+                "points": "{{-70.0,-25.0},{-70.0,-70.0}}"
+            },
+            {
+                "id": "8a9a3b57-a235-49a4-a946-796c0bfbaf63",
+                "name": "Line",
+                "points": "{{70.0,-25.0},{70.0,-70.0}}"
+            },
+            {
+                "id": "4241f240-cc7b-47f2-a1be-d0c90881d92a",
+                "name": "Line",
+                "points": "{{-80.0,25.0},{-60.0,25.0}}"
+            },
+            {
+                "id": "91b986c4-7fe2-4082-9c7b-6ffe7bbf4df6",
+                "name": "Line",
+                "points": "{{60.0,25.0},{80.0,25.0}}"
+            },
+            {
+                "id": "9e6df70f-f5d5-4ddc-8da1-b02a39ac2235",
+                "name": "Line",
+                "points": "{{-70.0,45.0},{-70.0,25.0}}"
+            },
+            {
+                "id": "5a76a679-ef17-46f4-8bd8-68aa416114c6",
+                "name": "Line",
+                "points": "{{70.0,45.0},{70.0,25.0}}"
+            },
+            {
+                "id": "52525707-6ebd-4cda-8c1c-6c99849599be",
+                "name": "Line",
+                "points": "{{-70.0,-70.0},{70.0,-70.0}}"
+            },
+            {
+                "extent": "{{-50.0,-50.0},{50.0,50.0}}",
+                "fillColor": "{255,255,255}",
+                "fillPattern": "FillPattern.HorizontalCylinder",
+                "id": "6c3f15d6-d272-4ad6-8cd8-19d7ac594fbf",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle",
+                "radius": "10.0"
+            },
+            {
+                "extent": "{{-150.0,60.0},{150.0,100.0}}",
+                "id": "a47d582b-27ba-43bd-8525-1294aa66b8df",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "extent": "{{-150.0,-120.0},{150.0,-80.0}}",
+                "id": "ad56ace0-89c7-4aca-ad27-39a62b310b67",
+                "name": "Text",
+                "textString": "\"J=%J\""
+            },
+            {
+                "extent": "{{-50,-50},{50,50}}",
+                "fillColor": "{255,255,255}",
+                "id": "3934ff81-5e96-4eff-897e-64c839b8426b",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle",
+                "radius": "10"
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Mechanics.Rotational.Sources.Torque",
+        "comment": "Input signal acting as external torque on a flange",
+        "connectors": [
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                "comment": "Flange of shaft",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialElementaryOneFlangeAndSupport2",
+                "extent": "{{90,-10},{110,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialElementaryOneFlangeAndSupport2",
+                "name": "flange",
+                "outputType": "",
+                "parentName": "torque",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "6217d11f-2a40-4dcf-9181-ce6fa8fbb9a8",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                    "name": "flange",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Support",
+                "comment": "Support/housing of component",
+                "condition": "if useSupport",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialElementaryOneFlangeAndSupport2",
+                "extent": "{{-10,-110},{10,-90}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialElementaryOneFlangeAndSupport2",
+                "name": "support",
+                "outputType": "",
+                "parentName": "torque",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "c142669e-d565-454c-93b9-9f150d38bfe9",
+                        "name": "Ellipse"
+                    },
+                    {
+                        "extent": "{{-150,150},{150,-150}}",
+                        "fillColor": "{192,192,192}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "159c977b-02b9-49d6-a451-14dff6ae50e9",
+                        "lineColor": "{192,192,192}",
+                        "name": "Rectangle"
+                    },
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "80655558-f93b-49cd-8684-c3db08e29346",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Support",
+                    "name": "support",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "comment": "Accelerating torque acting at flange (= -flange.tau)",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "",
+                "extent": "{{-140,-20},{-100,20}}",
+                "modelName": "Modelica.Mechanics.Rotational.Sources.Torque",
+                "name": "tau",
+                "outputType": "",
+                "parentName": "torque",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{0,0,127}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "dbc19265-a7be-4af9-9dd4-4669cd5d1c27",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealInput",
+                    "name": "tau",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{100,100}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{-25,-20},{-5,0}}",
+        "modelName": "",
+        "name": "torque",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "model",
+        "subShapes": [
+            {
+                "id": "c421ed29-8983-410b-a54e-a7c129a78bd0",
+                "name": "Line",
+                "points": "{{-50,-120},{-30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "17f0b5bc-2f7b-4a0a-afdd-412deb490609",
+                "name": "Line",
+                "points": "{{-30,-120},{-10,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "d8dd5c7a-a5ca-448b-9a5d-ae85efc3e966",
+                "name": "Line",
+                "points": "{{-10,-120},{10,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "e9f3a522-a852-42af-88a8-7aa2bc185c4a",
+                "name": "Line",
+                "points": "{{10,-120},{30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "85cf4383-2185-4f44-9d16-2bf906a74341",
+                "name": "Line",
+                "points": "{{-30,-100},{30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "extent": "{{-150,110},{150,70}}",
+                "id": "b2b7bfda-f51b-4418-a87c-b5ed4d8b16d1",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "extent": "{{-62,-29},{-141,-70}}",
+                "id": "9706fa13-888a-44d9-a507-e2c2b9665b50",
+                "name": "Text",
+                "textString": "\"tau\""
+            },
+            {
+                "fillPattern": "FillPattern.Solid",
+                "id": "2f5e017a-88a2-4855-a948-756443fb9e65",
+                "name": "Polygon",
+                "points": "{{86,0},{66,58},{37,27},{86,0}}"
+            },
+            {
+                "id": "8d612e9c-5a3d-4384-8e3a-85d7eaa2c035",
+                "name": "Line",
+                "points": "{{0,-10},{0,-101}}"
+            },
+            {
+                "fillPattern": "FillPattern.Solid",
+                "id": "07710322-5fb4-4a2b-875f-71885285eb75",
+                "name": "Polygon",
+                "points": "{{-53,-54},{-36,-30},{-50,-24},{-53,-54}}"
+            },
+            {
+                "id": "1c6682cf-5212-4233-9879-2e465bfc35c0",
+                "name": "Line",
+                "points": "{{-84,0},{-78,18},{-56,46},{-20,60},{20,60},{60,40},{82,8}}",
+                "smooth": "Smooth.Bezier",
+                "thickness": "0.5"
+            },
+            {
+                "id": "fe3742a0-b5d3-427d-8ef5-b261a7996e94",
+                "name": "Line",
+                "points": "{{-50,-40},{-38,-24},{-18,-12},{0,-10},{18,-12},{38,-24},{50,-40}}",
+                "smooth": "Smooth.Bezier"
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Mechanics.Rotational.Components.SpringDamper",
+        "comment": "Linear 1D rotational spring and damper in parallel",
+        "connectors": [
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                "comment": "Left flange of compliant 1-dim. rotational component",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialCompliantWithRelativeStates",
+                "extent": "{{-110,-10},{-90,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialCompliantWithRelativeStates",
+                "name": "flange_a",
+                "outputType": "",
+                "parentName": "spring",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "e61a34df-cad1-47a3-aac0-e5cb0a476781",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                    "name": "flange_a",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                "comment": "Right flange of compliant 1-dim. rotational component",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialCompliantWithRelativeStates",
+                "extent": "{{90,-10},{110,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialCompliantWithRelativeStates",
+                "name": "flange_b",
+                "outputType": "",
+                "parentName": "spring",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "e3167c2d-7986-4f5a-8da8-deea28f0ee61",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                    "name": "flange_b",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a",
+                "comment": "Optional port to which dissipated losses are transported in form of heat",
+                "condition": "if\n    useHeatPort",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{\n            100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Thermal.HeatTransfer.Interfaces.PartialElementaryConditionalHeatPortWithoutT",
+                "extent": "{{-110,-110},{-90,-90}}",
+                "iconTransformation": "true",
+                "modelName": "Modelica.Thermal.HeatTransfer.Interfaces.PartialElementaryConditionalHeatPortWithoutT",
+                "name": "heatPort",
+                "outputType": "",
+                "parentName": "spring",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{191,0,0}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "659c00fa-dafb-410e-a42f-5f35ef01a259",
+                        "lineColor": "{191,0,0}",
+                        "name": "Rectangle"
+                    }
+                ],
+                "type": {
+                    "classname": "Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a",
+                    "name": "heatPort",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Thermal.HeatTransfer.Interfaces.HeatPort",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Temperature",
+                                    "name": "T",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [
+                                        {
+                                            "classname": "Modelica.Units.SI.ThermodynamicTemperature",
+                                            "name": "",
+                                            "restriction": "type",
+                                            "direction": "",
+                                            "elements": [],
+                                            "extends": [],
+                                            "type": "Real"
+                                        }
+                                    ],
+                                    "type": "Modelica.Units.SI.ThermodynamicTemperature"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.HeatFlowRate",
+                                    "name": "Q_flow",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{100,100}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{32,-20},\n              {52,0}}",
+        "modelName": "",
+        "name": "spring",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "model",
+        "subShapes": [
+            {
+                "id": "3797b75a-c481-4b2b-bf69-549602f77cd9",
+                "name": "Line",
+                "points": "{{-80,40},{-60,40},{-45,10},{-15,70},{15,10},{45,70},{60,40},{80,40}}"
+            },
+            {
+                "id": "9c463fb5-5326-42c6-9c62-a0c826d81ea0",
+                "name": "Line",
+                "points": "{{-80,40},{-80,-40}}"
+            },
+            {
+                "id": "f74aff37-8193-45a4-beba-2d2bb928ccf1",
+                "name": "Line",
+                "points": "{{-80,-40},{-50,-40}}"
+            },
+            {
+                "extent": "{{-50,-10},{40,-70}}",
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "0444925a-13bb-48a4-94e6-4706ea731e78",
+                "name": "Rectangle"
+            },
+            {
+                "id": "722f0689-87af-41f1-9f01-f86413defb18",
+                "name": "Line",
+                "points": "{{-50,-10},{70,-10}}"
+            },
+            {
+                "id": "118942b1-e1a8-46a5-bb08-5b6beab8b4d3",
+                "name": "Line",
+                "points": "{{-50,-70},{70,-70}}"
+            },
+            {
+                "id": "f2fcdc72-afdd-4537-98b4-7a770221de42",
+                "name": "Line",
+                "points": "{{40,-40},{80,-40}}"
+            },
+            {
+                "id": "055ab20b-203d-410e-b970-c197939f03c9",
+                "name": "Line",
+                "points": "{{80,40},{80,-40}}"
+            },
+            {
+                "id": "d0902993-2310-47bb-8a31-8be126997fe4",
+                "name": "Line",
+                "points": "{{-90,0},{-80,0}}"
+            },
+            {
+                "id": "e225500b-22a5-4221-b578-021918f57e11",
+                "name": "Line",
+                "points": "{{80,0},{90,0}}"
+            },
+            {
+                "extent": "{{-150,-144},{150,-104}}",
+                "id": "2c21bad5-f75b-47c1-9c2e-748a04052338",
+                "name": "Text",
+                "origin": "{0,-9}",
+                "textString": "\"d=%d\""
+            },
+            {
+                "extent": "{{-190,110},{190,70}}",
+                "id": "a2f3bff3-05ac-43cd-a1a2-31a197ae2ed6",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "extent": "{{-150,-108},{150,-68}}",
+                "id": "8b252d37-bc84-41e2-a70d-c0f2e0763c80",
+                "name": "Text",
+                "origin": "{0,-7}",
+                "textString": "\"c=%c\""
+            },
+            {
+                "color": "{191,0,0}",
+                "id": "082e2c28-1d3f-4515-926c-3ee467db1f8e",
+                "name": "Line",
+                "pattern": "LinePattern.Dot",
+                "points": "{{-100,-100},{-100,-55},{-5,-55}}",
+                "visible": "useHeatPort"
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Mechanics.Rotational.Components.Inertia",
+        "comment": "1D-rotational component with inertia",
+        "connectors": [
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                "comment": "Flange of left shaft",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "extent": "{{-110,-10},{-90,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "name": "flange_a",
+                "outputType": "",
+                "parentName": "inertia2",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "2d673259-a6f9-4cbf-a9d3-1df5d1196ccb",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                    "name": "flange_a",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                "comment": "Flange of right shaft",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "extent": "{{90,-10},{110,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialTwoFlanges",
+                "name": "flange_b",
+                "outputType": "",
+                "parentName": "inertia2",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "615d0c1a-a57b-48e4-b49f-9cb3170ca2c7",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                    "name": "flange_b",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{60,-20},{80,0}}",
+        "modelName": "",
+        "name": "inertia2",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "model",
+        "subShapes": [
+            {
+                "extent": "{{-100.0,-10.0},{-50.0,10.0}}",
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.HorizontalCylinder",
+                "id": "92a05764-3c68-43fc-9cd5-d9aafebcaba1",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle"
+            },
+            {
+                "extent": "{{50.0,-10.0},{100.0,10.0}}",
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.HorizontalCylinder",
+                "id": "5ed0b28a-1e78-4787-9cc6-4ea30b49189d",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle"
+            },
+            {
+                "id": "bdfe9f27-dca1-4810-971e-712a2c0770ab",
+                "name": "Line",
+                "points": "{{-80.0,-25.0},{-60.0,-25.0}}"
+            },
+            {
+                "id": "cebe7888-08cb-406d-ac02-792d521e420b",
+                "name": "Line",
+                "points": "{{60.0,-25.0},{80.0,-25.0}}"
+            },
+            {
+                "id": "51b2d6a1-55e0-470a-b929-7ca8b29794e4",
+                "name": "Line",
+                "points": "{{-70.0,-25.0},{-70.0,-70.0}}"
+            },
+            {
+                "id": "386b5bd6-772f-4b19-bc01-df1ff9c1e77a",
+                "name": "Line",
+                "points": "{{70.0,-25.0},{70.0,-70.0}}"
+            },
+            {
+                "id": "17a1543a-9aed-4259-943a-c14b7e1c04d8",
+                "name": "Line",
+                "points": "{{-80.0,25.0},{-60.0,25.0}}"
+            },
+            {
+                "id": "54c46562-dba6-492a-b361-be5fadd47d19",
+                "name": "Line",
+                "points": "{{60.0,25.0},{80.0,25.0}}"
+            },
+            {
+                "id": "3e1ca737-272c-45d3-aac8-d12e61f14e58",
+                "name": "Line",
+                "points": "{{-70.0,45.0},{-70.0,25.0}}"
+            },
+            {
+                "id": "901b58a3-74d8-43c3-9fff-cbee39e9cd24",
+                "name": "Line",
+                "points": "{{70.0,45.0},{70.0,25.0}}"
+            },
+            {
+                "id": "e3d8a737-4b89-41d6-9ca6-418873f587b0",
+                "name": "Line",
+                "points": "{{-70.0,-70.0},{70.0,-70.0}}"
+            },
+            {
+                "extent": "{{-50.0,-50.0},{50.0,50.0}}",
+                "fillColor": "{255,255,255}",
+                "fillPattern": "FillPattern.HorizontalCylinder",
+                "id": "73bb5a67-6302-4e67-8cda-3e6dfdffd611",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle",
+                "radius": "10.0"
+            },
+            {
+                "extent": "{{-150.0,60.0},{150.0,100.0}}",
+                "id": "06a9ba94-8a08-43b0-8a99-11627e713cdc",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "extent": "{{-150.0,-120.0},{150.0,-80.0}}",
+                "id": "016a2825-cb88-4a35-b7d8-0a8789a9855c",
+                "name": "Text",
+                "textString": "\"J=%J\""
+            },
+            {
+                "extent": "{{-50,-50},{50,50}}",
+                "fillColor": "{255,255,255}",
+                "id": "e3138c1f-9e08-4da8-8b72-56d03cc230ab",
+                "lineColor": "{64,64,64}",
+                "name": "Rectangle",
+                "radius": "10"
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Blocks.Sources.KinematicPTP",
+        "comment": "Move as fast as possible along a distance within given kinematic constraints",
+        "connectors": [
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                "comment": "Connector of Real output signals",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "output",
+                "extendNameBase": "Modelica.Blocks.Interfaces.MO",
+                "extent": "{{100,-10},{120,10}}",
+                "modelName": "Modelica.Blocks.Interfaces.MO",
+                "name": "y",
+                "outputType": "[nout]",
+                "parentName": "kinematicPTP",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "44e908ca-8804-4c4b-91cf-f8dda7092356",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                    "name": "y",
+                    "restriction": "connector",
+                    "direction": "output",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{100,100}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{-92,20},{-72,\n              40}}",
+        "modelName": "",
+        "name": "kinematicPTP",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "block",
+        "subShapes": [
+            {
+                "extent": "{{-100,-100},{100,100}}",
+                "fillColor": "{255,255,255}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "2dffd490-06d1-4ba9-987a-a2d17749dac1",
+                "lineColor": "{0,0,127}",
+                "name": "Rectangle"
+            },
+            {
+                "extent": "{{-150,150},{150,110}}",
+                "id": "65d6bf63-041e-4abd-9a29-d5e8a411dc54",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "24798cf8-70d7-40e6-b8c2-64022ef4a75f",
+                "name": "Line",
+                "points": "{{-80,78},{-80,-82}}"
+            },
+            {
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "74391890-472b-4d78-aa2b-b017377dfdf0",
+                "lineColor": "{192,192,192}",
+                "name": "Polygon",
+                "points": "{{-80,90},{-88,68},{-72,68},{-80,88},{-80,90}}"
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "0e5a93b1-b8aa-4ef7-8cad-5755a7856aaa",
+                "name": "Line",
+                "points": "{{-90,0},{82,0}}"
+            },
+            {
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "e751488d-67b7-43cd-acd9-a5b944e5bac2",
+                "lineColor": "{192,192,192}",
+                "name": "Polygon",
+                "points": "{{90,0},{68,8},{68,-8},{90,0}}"
+            },
+            {
+                "id": "a1d7a60f-c086-477b-a3e0-cd8d61d1c958",
+                "name": "Line",
+                "points": "{{-80,0},{-70,0},{-70,70},{-30,70},{-30,0},{20,0},{20,-70},{\n                60,-70},{60,0},{68,0}}"
+            },
+            {
+                "extent": "{{2,80},{80,20}}",
+                "id": "8adb4e14-5f7c-46ac-a146-f58771caf8d7",
+                "name": "Text",
+                "textColor": "{192,192,192}",
+                "textString": "\"acc\""
+            },
+            {
+                "extent": "{{-150,-150},{150,-110}}",
+                "id": "a98cdb2e-1be4-4936-b3ac-95ccfa3ad988",
+                "name": "Text",
+                "textString": "\"deltaq=%deltaq\""
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Blocks.Continuous.Integrator",
+        "comment": "Output the integral of the input signal with optional reset",
+        "connectors": [
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "comment": "Connector of Real input signal",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "Modelica.Blocks.Interfaces.SISO",
+                "extent": "{{-140,-20},{-100,20}}",
+                "modelName": "Modelica.Blocks.Interfaces.SISO",
+                "name": "u",
+                "outputType": "",
+                "parentName": "integrator",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{0,0,127}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "2ab1e9d7-093d-4b41-b66c-1acb4ec83de2",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealInput",
+                    "name": "u",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                "comment": "Connector of Real output signal",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "output",
+                "extendNameBase": "Modelica.Blocks.Interfaces.SISO",
+                "extent": "{{100,-10},{120,10}}",
+                "modelName": "Modelica.Blocks.Interfaces.SISO",
+                "name": "y",
+                "outputType": "",
+                "parentName": "integrator",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "73ab5ff0-c2c8-44ee-8484-e5afa37d5a23",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                    "name": "y",
+                    "restriction": "connector",
+                    "direction": "output",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.BooleanInput",
+                "comment": "Optional connector of reset signal",
+                "condition": "if use_reset",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "",
+                "extent": "{{-20,-20},{20,20}}",
+                "modelName": "Modelica.Blocks.Continuous.Integrator",
+                "name": "reset",
+                "origin": "{60,-120}",
+                "outputType": "",
+                "parentName": "integrator",
+                "protected": false,
+                "restriction": "connector",
+                "rotation": "90",
+                "subShapes": [
+                    {
+                        "fillColor": "{255,0,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "4e1b2302-9303-403e-83d1-768396ed4601",
+                        "lineColor": "{255,0,255}",
+                        "name": "Polygon",
+                        "points": "{{-100,100},{100,0},{-100,-100},{-100,100}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.BooleanInput",
+                    "name": "reset",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Boolean"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "comment": "Optional connector of set signal",
+                "condition": "if use_reset and use_set",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "input",
+                "extendNameBase": "",
+                "extent": "{{-20,-20},{20,20}}",
+                "modelName": "Modelica.Blocks.Continuous.Integrator",
+                "name": "set",
+                "origin": "{60,120}",
+                "outputType": "",
+                "parentName": "integrator",
+                "protected": false,
+                "restriction": "connector",
+                "rotation": "270",
+                "subShapes": [
+                    {
+                        "fillColor": "{0,0,127}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "43a958b7-d9e0-4081-a1f5-9c610704d182",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealInput",
+                    "name": "set",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{-63,20},{-43,40}}",
+        "modelName": "",
+        "name": "integrator",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "block",
+        "subShapes": [
+            {
+                "extent": "{{-100,-100},{100,100}}",
+                "fillColor": "{255,255,255}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "e6dae6e8-b0d5-4d43-99b8-f95a2397deb1",
+                "lineColor": "{0,0,127}",
+                "name": "Rectangle"
+            },
+            {
+                "extent": "{{-150,150},{150,110}}",
+                "id": "d79b931a-58a6-4a41-a2e6-ad3eb4746ac3",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "63e7055a-541b-49b5-aea8-8a88b3b0722e",
+                "name": "Line",
+                "points": "{{-80.0,78.0},{-80.0,-90.0}}"
+            },
+            {
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "0bd80780-3ba2-424b-8c2c-39cc6cd938e4",
+                "lineColor": "{192,192,192}",
+                "name": "Polygon",
+                "points": "{{-80.0,90.0},{-88.0,68.0},{-72.0,68.0},{-80.0,90.0}}"
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "a53d16a3-fd63-4068-a486-77109c04fff2",
+                "name": "Line",
+                "points": "{{-90.0,-80.0},{82.0,-80.0}}"
+            },
+            {
+                "fillColor": "{192,192,192}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "e549ccab-89f3-4c5d-90e6-bd95a56c1688",
+                "lineColor": "{192,192,192}",
+                "name": "Polygon",
+                "points": "{{90.0,-80.0},{68.0,-72.0},{68.0,-88.0},{90.0,-80.0}}"
+            },
+            {
+                "extent": "{{0.0,-70.0},{60.0,-10.0}}",
+                "id": "be8d53ba-24c6-4b85-ab45-628f05366fe6",
+                "name": "Text",
+                "textColor": "{192,192,192}",
+                "textString": "\"I\""
+            },
+            {
+                "extent": "{{-150.0,-150.0},{150.0,-110.0}}",
+                "id": "e794b31e-a527-40c1-ae72-e5a25755d425",
+                "name": "Text",
+                "textString": "\"k=%k\""
+            },
+            {
+                "color": "{0,0,127}",
+                "id": "733b370c-5cc9-49d6-8ff1-2b5cd17535cf",
+                "name": "Line",
+                "points": "DynamicSelect({{-80.0,-80.0},{80.0,80.0}}, if use_reset then {{-80.0,-80.0},{60.0,60.0},{60.0,-80.0},{80.0,-60.0}} else {{-80.0,-80.0},{80.0,80.0}})"
+            },
+            {
+                "color": "{255,0,255}",
+                "id": "a8e2e0b3-1f90-4f84-beaf-7141f04b19f8",
+                "name": "Line",
+                "pattern": "LinePattern.Dot",
+                "points": "{{60,-100},{60,-80}}",
+                "visible": "use_reset"
+            },
+            {
+                "extent": "{{-28,-62},{94,-86}}",
+                "id": "d4474ab1-eb9d-43c6-9e5b-77cdef5c3d6c",
+                "name": "Text",
+                "textString": "\"reset\"",
+                "visible": "use_reset"
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Mechanics.Rotational.Sensors.SpeedSensor",
+        "comment": "Ideal sensor to measure the absolute flange angular velocity",
+        "connectors": [
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                "comment": "Flange of shaft from which sensor information shall be measured",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialAbsoluteSensor",
+                "extent": "{{-110,-10},{-90,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialAbsoluteSensor",
+                "name": "flange",
+                "outputType": "",
+                "parentName": "speedSensor",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "ec4d88cc-c3f0-4500-abe7-397dafdc5b34",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_a",
+                    "name": "flange",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                "comment": "Absolute angular velocity of flange as output signal",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "output",
+                "extendNameBase": "",
+                "extent": "{{100,-10},{120,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Sensors.SpeedSensor",
+                "name": "w",
+                "outputType": "",
+                "parentName": "speedSensor",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "3192b311-2552-47a0-9e25-ca9977bd1d9e",
+                        "lineColor": "{0,0,127}",
+                        "name": "Polygon",
+                        "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                    "name": "w",
+                    "restriction": "connector",
+                    "direction": "output",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Real"
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{100,100}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{22,-50},{2,-30}}",
+        "modelName": "",
+        "name": "speedSensor",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "model",
+        "subShapes": [
+            {
+                "extent": "{{-70.0,-70.0},{70.0,70.0}}",
+                "fillColor": "{245,245,245}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "efb9cce6-873f-4c37-a00a-38bfd6330851",
+                "name": "Ellipse"
+            },
+            {
+                "id": "39523ee8-8cb1-4519-9dcc-b18c1e99ef22",
+                "name": "Line",
+                "points": "{{0.0,70.0},{0.0,40.0}}"
+            },
+            {
+                "id": "d8536ba2-5265-4b82-8d78-db893de3e211",
+                "name": "Line",
+                "points": "{{22.9,32.8},{40.2,57.3}}"
+            },
+            {
+                "id": "b0f7499a-3f78-4daf-8507-3650f12c3b0c",
+                "name": "Line",
+                "points": "{{-22.9,32.8},{-40.2,57.3}}"
+            },
+            {
+                "id": "b767c617-aec3-4c37-9353-29123451ca42",
+                "name": "Line",
+                "points": "{{37.6,13.7},{65.8,23.9}}"
+            },
+            {
+                "id": "8e34c567-a381-419a-9ad9-17e1c77c8c96",
+                "name": "Line",
+                "points": "{{-37.6,13.7},{-65.8,23.9}}"
+            },
+            {
+                "extent": "{{-12.0,-12.0},{12.0,12.0}}",
+                "fillColor": "{255,255,255}",
+                "id": "807a0f56-c3b2-4a02-b131-43966aeef0a0",
+                "lineColor": "{64,64,64}",
+                "name": "Ellipse"
+            },
+            {
+                "fillColor": "{64,64,64}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "bae1bfc8-048d-4861-a292-4ddee3ac801a",
+                "name": "Polygon",
+                "pattern": "LinePattern.None",
+                "points": "{{-5.0,0.0},{-2.0,60.0},{0.0,65.0},{2.0,60.0},{5.0,0.0}}",
+                "rotation": "-17.5"
+            },
+            {
+                "extent": "{{-7.0,-7.0},{7.0,7.0}}",
+                "fillColor": "{64,64,64}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "dba714c3-40d3-4a1e-8774-4d51f7ec6765",
+                "name": "Ellipse",
+                "pattern": "LinePattern.None"
+            },
+            {
+                "id": "048d83fb-e121-4d4c-aef9-e93b543bbce0",
+                "name": "Line",
+                "points": "{{-70.0,0.0},{-90.0,0.0}}"
+            },
+            {
+                "color": "{0,0,127}",
+                "id": "34bf4014-2fd9-4e4d-a93e-3407b7a21b04",
+                "name": "Line",
+                "points": "{{70.0,0.0},{100.0,0.0}}"
+            },
+            {
+                "extent": "{{-150.0,80.0},{150.0,120.0}}",
+                "id": "2d355f66-ebbd-4579-9977-2a2453ddbb85",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "extent": "{{-50,-14},{50,-54}}",
+                "id": "f4931d10-1c75-447d-8c55-80de9be20eb7",
+                "name": "Text",
+                "textColor": "{64,64,64}",
+                "textString": "\"rad/s\""
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    },
+    {
+        "classname": "Modelica.Mechanics.Rotational.Sources.ConstantTorque",
+        "comment": "Constant torque, not dependent on speed",
+        "connectors": [
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                "comment": "Flange of shaft",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialTorque",
+                "extent": "{{90,-10},{110,10}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialElementaryOneFlangeAndSupport2",
+                "name": "flange",
+                "outputType": "",
+                "parentName": "loadTorque",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "5df48259-1950-41be-89de-f9f70e982558",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange_b",
+                    "name": "flange",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Mechanics.Rotational.Interfaces.Support",
+                "comment": "Support/housing of component",
+                "condition": "if useSupport",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "",
+                "extendNameBase": "Modelica.Mechanics.Rotational.Interfaces.PartialTorque",
+                "extent": "{{-10,-110},{10,-90}}",
+                "modelName": "Modelica.Mechanics.Rotational.Interfaces.PartialElementaryOneFlangeAndSupport2",
+                "name": "support",
+                "outputType": "",
+                "parentName": "loadTorque",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "5a8f47f3-bfcb-4aba-b423-b27ec9d35628",
+                        "name": "Ellipse"
+                    },
+                    {
+                        "extent": "{{-150,150},{150,-150}}",
+                        "fillColor": "{192,192,192}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "f41ac9d1-2b2a-4668-896e-187adf1d1124",
+                        "lineColor": "{192,192,192}",
+                        "name": "Rectangle"
+                    },
+                    {
+                        "extent": "{{-100,100},{100,-100}}",
+                        "fillColor": "{95,95,95}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "8e9b58ff-e313-4842-bb47-ccf9970afd19",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Mechanics.Rotational.Interfaces.Support",
+                    "name": "support",
+                    "restriction": "connector",
+                    "direction": "",
+                    "elements": [],
+                    "extends": [
+                        {
+                            "classname": "Modelica.Mechanics.Rotational.Interfaces.Flange",
+                            "name": "",
+                            "restriction": "connector",
+                            "direction": "",
+                            "elements": [
+                                {
+                                    "classname": "Modelica.Units.SI.Angle",
+                                    "name": "phi",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                },
+                                {
+                                    "classname": "Modelica.Units.SI.Torque",
+                                    "name": "tau",
+                                    "restriction": "type",
+                                    "direction": "",
+                                    "elements": [],
+                                    "extends": [],
+                                    "type": "Real"
+                                }
+                            ],
+                            "extends": [],
+                            "type": ""
+                        }
+                    ],
+                    "type": ""
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{100,100}}",
+            "preserveAspectRatio": "true"
+        },
+        "direction": "",
+        "extent": "{{98,-15},{88,-5}}",
+        "modelName": "",
+        "name": "loadTorque",
+        "outputType": "",
+        "parentName": "",
+        "restriction": "model",
+        "subShapes": [
+            {
+                "id": "17836c7e-a311-4c75-adda-d66210c7b020",
+                "name": "Line",
+                "points": "{{-50,-120},{-30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "654ece94-e41e-41cb-8a5f-94354a20b4df",
+                "name": "Line",
+                "points": "{{-30,-120},{-10,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "c405842b-8d99-4aae-88a5-04a5be896cdf",
+                "name": "Line",
+                "points": "{{-10,-120},{10,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "9d3ec06c-d731-44c9-a734-93cbe15b59ae",
+                "name": "Line",
+                "points": "{{10,-120},{30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "36e1c78f-a1de-4a9d-ae77-281927ee7817",
+                "name": "Line",
+                "points": "{{-30,-100},{30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "extent": "{{-96,96},{96,-96}}",
+                "fillColor": "{255,255,255}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "02ac82a0-3959-4ca3-a80d-6e66c9809274",
+                "lineColor": "{255,255,255}",
+                "name": "Rectangle"
+            },
+            {
+                "id": "d975c0ee-7b7d-4ee7-bc5a-2c74f27105b1",
+                "name": "Line",
+                "points": "{{0,-62},{0,-100}}"
+            },
+            {
+                "extent": "{{-150,150},{150,110}}",
+                "id": "a5cd5186-5345-40e1-91a0-949b0122cc76",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "fillPattern": "FillPattern.Solid",
+                "id": "c6ac1312-959b-4dd5-89b9-f6c910da9b2d",
+                "name": "Polygon",
+                "points": "{{94,26},{80,84},{50,62},{94,26}}"
+            },
+            {
+                "fillPattern": "FillPattern.Solid",
+                "id": "db473505-0540-4d3f-aa9c-b70ee696ec96",
+                "name": "Polygon",
+                "points": "{{-50,-98},{-30,-80},{-42,-72},{-50,-98}}"
+            },
+            {
+                "id": "c05a19ce-beb3-4ff1-9d7f-b3c41e90ff3e",
+                "name": "Line",
+                "points": "{{-50,-120},{-30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "3ae42611-2ca3-4f80-8ce1-73d8319566a6",
+                "name": "Line",
+                "points": "{{-30,-120},{-10,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "90c4b0a8-ad48-4676-952a-fdf839b40616",
+                "name": "Line",
+                "points": "{{-10,-120},{10,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "0ac5f1f2-2b82-41ce-b2b5-686eaba28f21",
+                "name": "Line",
+                "points": "{{10,-120},{30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "204ed4b0-011b-43d5-b38e-6ece806844e5",
+                "name": "Line",
+                "points": "{{-30,-100},{30,-100}}",
+                "visible": "not useSupport"
+            },
+            {
+                "id": "af71cbba-ccfa-46fb-8abc-f1f710b0e4d4",
+                "name": "Line",
+                "points": "{{-48,-92},{-38,-76},{-18,-64},{0,-60},{18,-64},{38,-76},{48,-92}}",
+                "smooth": "Smooth.Bezier"
+            },
+            {
+                "id": "34636835-a532-4e9e-a28d-c0a1c8c7a349",
+                "name": "Line",
+                "points": "{{-86,40},{-74,66},{-56,86},{-20,100},{20,100},{60,80},{82,48}}",
+                "smooth": "Smooth.Bezier"
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "a57fbbab-c1e9-48f1-91f0-c4ac2dcba778",
+                "name": "Line",
+                "points": "{{-75,10},{75,10}}"
+            },
+            {
+                "color": "{192,192,192}",
+                "id": "03573aa4-a3e7-4254-9302-48ef2b4b4744",
+                "name": "Line",
+                "points": "{{0,60},{0,0}}"
+            },
+            {
+                "color": "{0,0,127}",
+                "id": "041ae8ee-f378-4db8-aed8-6485e6fcafa0",
+                "name": "Line",
+                "points": "{{-75,30},{75,30}}"
+            },
+            {
+                "extent": "{{-120,-40},{120,-10}}",
+                "id": "ca7d0d32-6bb8-42d4-af28-a86db39c5607",
+                "name": "Text",
+                "textString": "\"%tau_constant\""
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    }
+]

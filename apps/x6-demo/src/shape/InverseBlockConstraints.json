@@ -1,0 +1,200 @@
+{
+    "classname": "Modelica.Blocks.Math.InverseBlockConstraints",
+    "comment": "Construct inverse model by requiring that two inputs and two outputs are identical",
+    "connectors": [
+        {
+            "classname": "Modelica.Blocks.Interfaces.RealInput",
+            "comment": "Input signal 1 (u1 = u2)",
+            "condition": "",
+            "coordinateSystem": {
+                "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                "initialScale": "0.2",
+                "preserveAspectRatio": "true"
+            },
+            "direction": "input",
+            "extendNameBase": "",
+            "extent": "{{-240,-20},{-200,20}}",
+            "iconTransformation": "true",
+            "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+            "name": "u1",
+            "outputType": "",
+            "parentName": "inverseBlockConstraints",
+            "protected": false,
+            "restriction": "connector",
+            "subShapes": [
+                {
+                    "fillColor": "{0,0,127}",
+                    "fillPattern": "FillPattern.Solid",
+                    "id": "4a484aa1-8e9c-433d-bc2c-7cb796e42372",
+                    "lineColor": "{0,0,127}",
+                    "name": "Polygon",
+                    "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                }
+            ],
+            "type": {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "name": "u1",
+                "restriction": "connector",
+                "direction": "input",
+                "elements": [],
+                "extends": [],
+                "type": "Real"
+            },
+            "typeDimension": ""
+        },
+        {
+            "classname": "Modelica.Blocks.Interfaces.RealInput",
+            "comment": "Input signal 2 (u1 = u2)",
+            "condition": "",
+            "coordinateSystem": {
+                "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                "initialScale": "0.2",
+                "preserveAspectRatio": "true"
+            },
+            "direction": "input",
+            "extendNameBase": "",
+            "extent": "{{-140,-20},{-180,20}}",
+            "iconTransformation": "true",
+            "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+            "name": "u2",
+            "outputType": "",
+            "parentName": "inverseBlockConstraints",
+            "protected": false,
+            "restriction": "connector",
+            "subShapes": [
+                {
+                    "fillColor": "{0,0,127}",
+                    "fillPattern": "FillPattern.Solid",
+                    "id": "f00be1f7-9447-44a1-a7fd-f5d5437921fd",
+                    "lineColor": "{0,0,127}",
+                    "name": "Polygon",
+                    "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                }
+            ],
+            "type": {
+                "classname": "Modelica.Blocks.Interfaces.RealInput",
+                "name": "u2",
+                "restriction": "connector",
+                "direction": "input",
+                "elements": [],
+                "extends": [],
+                "type": "Real"
+            },
+            "typeDimension": ""
+        },
+        {
+            "classname": "Modelica.Blocks.Interfaces.RealOutput",
+            "comment": "Output signal 1 (y1 = y2)",
+            "condition": "",
+            "coordinateSystem": {
+                "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                "preserveAspectRatio": "true"
+            },
+            "direction": "output",
+            "extendNameBase": "",
+            "extent": "{{200,-10},{220,10}}",
+            "iconTransformation": "true",
+            "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+            "name": "y1",
+            "outputType": "",
+            "parentName": "inverseBlockConstraints",
+            "protected": false,
+            "restriction": "connector",
+            "subShapes": [
+                {
+                    "fillColor": "{255,255,255}",
+                    "fillPattern": "FillPattern.Solid",
+                    "id": "b0d9bbc4-0f69-462c-bd88-7e56d4dfc145",
+                    "lineColor": "{0,0,127}",
+                    "name": "Polygon",
+                    "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                }
+            ],
+            "type": {
+                "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                "name": "y1",
+                "restriction": "connector",
+                "direction": "output",
+                "elements": [],
+                "extends": [],
+                "type": "Real"
+            },
+            "typeDimension": ""
+        },
+        {
+            "classname": "Modelica.Blocks.Interfaces.RealOutput",
+            "comment": "Output signal 2 (y1 = y2)",
+            "condition": "",
+            "coordinateSystem": {
+                "extent": "{{-100.0,-100.0},{100.0,100.0}}",
+                "preserveAspectRatio": "true"
+            },
+            "direction": "output",
+            "extendNameBase": "",
+            "extent": "{{180,-10},{160,10}}",
+            "iconTransformation": "true",
+            "modelName": "Modelica.Blocks.Math.InverseBlockConstraints",
+            "name": "y2",
+            "outputType": "",
+            "parentName": "inverseBlockConstraints",
+            "protected": false,
+            "restriction": "connector",
+            "subShapes": [
+                {
+                    "fillColor": "{255,255,255}",
+                    "fillPattern": "FillPattern.Solid",
+                    "id": "6bed5b9b-59f6-48ea-b344-9ce687048549",
+                    "lineColor": "{0,0,127}",
+                    "name": "Polygon",
+                    "points": "{{-100.0,100.0},{100.0,0.0},{-100.0,-100.0}}"
+                }
+            ],
+            "type": {
+                "classname": "Modelica.Blocks.Interfaces.RealOutput",
+                "name": "y2",
+                "restriction": "connector",
+                "direction": "output",
+                "elements": [],
+                "extends": [],
+                "type": "Real"
+            },
+            "typeDimension": ""
+        }
+    ],
+    "coordinateSystem": {
+        "extent": "{{-200,-120},{200,\n120}}",
+        "preserveAspectRatio": "false"
+    },
+    "direction": "",
+    "extent": "{{-10,20},{30,40}}",
+    "modelName": "",
+    "name": "inverseBlockConstraints",
+    "origin": "{40,60}",
+    "outputType": "",
+    "parentName": "",
+    "restriction": "block",
+    "subShapes": [
+        {
+            "color": "{0,0,127}",
+            "id": "129112ac-c4b7-45d6-b857-84f75a51f0b8",
+            "name": "Line",
+            "points": "{{180,0},{200,0}}"
+        },
+        {
+            "color": "{0,0,127}",
+            "id": "de75a816-f525-49f2-9279-5d5edf4d3707",
+            "name": "Line",
+            "points": "{{-200,0},{-180,0}}"
+        },
+        {
+            "extent": "{{-190,120},{190,-120}}",
+            "id": "0ea10abc-1f99-464e-a1fc-3931ed9e1327",
+            "lineColor": "{135,135,135}",
+            "name": "Rectangle"
+        }
+    ],
+    "transformation": "true",
+    "type": "",
+    "typeDimension": "",
+    "visibleList": null
+}
