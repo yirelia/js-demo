@@ -3,7 +3,10 @@ import { onMounted } from 'vue'
 import { Graph, } from '@antv/x6'
 import { Element } from './shape'
 import Pid from './shape/pid.json'
+import Test from './shape/test.json'
+import SwitchWQ from './shape/switch.json'
 const shapeData = Pid
+
 onMounted(() => {
   const graph = new Graph({
     container: document.getElementById('container'),
@@ -14,13 +17,22 @@ onMounted(() => {
 
 
   function renderNodes() {
-    const nodes = shapeData.map((node) => {
+    const nodes = SwitchWQ.map((node) => {
       const el = new Element(node)
       const n = el.toNode()
       return n
     })
     graph.addNodes(nodes)
   }
+
+
+  function renderNode() {
+    const el = new Element(Test)
+    const node = el.toNode()
+    graph.addNode(node)
+  }
+
+  // renderNode()
   // const el = new Element(shapeData)
   // const node = el.toNode()
   renderNodes()

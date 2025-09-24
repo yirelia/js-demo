@@ -390,10 +390,16 @@ export class Element {
       sy = -sy;
     }
 
+    const det2 = (a, b, c, d) => {
+      return a * d - b * c;
+    };
+
+    const a = det2(sx, 0, 0, sy);
+    const rotation = a > 0 ? this.rotation : -this.rotation;
     return {
       tagName: "g",
       attrs: {
-        transform: `translate(${this.position.x} ${this.position.y}) scale(${sx} ${sy}) rotate(${this.rotation}) `,
+        transform: `translate(${this.position.x} ${this.position.y}) scale(${sx} ${sy}) rotate(${rotation}) `,
       },
       children,
     };

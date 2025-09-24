@@ -1,0 +1,147 @@
+[
+    {
+        "classname": "MultiSwitch",
+        "comment": "Set Integer expression that is associated with the first active input signal",
+        "connectors": [
+            {
+                "classname": "Modelica.Blocks.Interfaces.BooleanVectorInput",
+                "comment": "Set y = expr[i], if u[i] = true",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "initialScale": "0.2",
+                    "preserveAspectRatio": "false"
+                },
+                "direction": "input",
+                "extendNameBase": "",
+                "extent": "{{-110,30},{-90,-30}}",
+                "modelName": "MultiSwitch",
+                "name": "u",
+                "outputType": "[nu]",
+                "parentName": "multiSwitch1",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "extent": "{{-100,-100},{100,100}}",
+                        "fillColor": "{255,0,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "da5d23f0-370c-4e24-89c2-37d18cd065c4",
+                        "lineColor": "{255,0,255}",
+                        "name": "Ellipse"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.BooleanVectorInput",
+                    "name": "u",
+                    "restriction": "connector",
+                    "direction": "input",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Boolean"
+                },
+                "typeDimension": ""
+            },
+            {
+                "classname": "Modelica.Blocks.Interfaces.IntegerOutput",
+                "comment": "Output depending on expression",
+                "condition": "",
+                "coordinateSystem": {
+                    "extent": "{{-100,-100},{100,100}}",
+                    "preserveAspectRatio": "true"
+                },
+                "direction": "output",
+                "extendNameBase": "",
+                "extent": "{{300,-10},{320,10}}",
+                "modelName": "MultiSwitch",
+                "name": "y",
+                "outputType": "",
+                "parentName": "multiSwitch1",
+                "protected": false,
+                "restriction": "connector",
+                "subShapes": [
+                    {
+                        "fillColor": "{255,255,255}",
+                        "fillPattern": "FillPattern.Solid",
+                        "id": "271119a8-e4f2-4b5f-912b-01bcc7c62802",
+                        "lineColor": "{255,127,0}",
+                        "name": "Polygon",
+                        "points": "{{-100,100},{100,0},{-100,-100},{-100,100}}"
+                    }
+                ],
+                "transformation": "true",
+                "type": {
+                    "classname": "Modelica.Blocks.Interfaces.IntegerOutput",
+                    "name": "y",
+                    "restriction": "connector",
+                    "direction": "output",
+                    "elements": [],
+                    "extends": [],
+                    "type": "Integer"
+                },
+                "typeDimension": ""
+            }
+        ],
+        "coordinateSystem": {
+            "extent": "{{-100,-100},{300,100}}",
+            "preserveAspectRatio": "false"
+        },
+        "direction": "",
+        "extent": "{{30,-10},{-10,10}}",
+        "modelName": "",
+        "name": "multiSwitch1",
+        "origin": "{-5,62}",
+        "outputType": "",
+        "parentName": "",
+        "rotation": "180",
+        "restriction": "block",
+        "subShapes": [
+            {
+                "extent": "{{310,-25},{410,-45}}",
+                "id": "25649bf8-af0b-47b3-bf05-4b14edc50b17",
+                "name": "Text",
+                "textString": "DynamicSelect(\" \",\n              String(y,\n                minimumLength=1,\n                significantDigits=0))"
+            },
+            {
+                "extent": "{{-100,-60},{300,-90}}",
+                "id": "9dccdaa2-978f-4f19-a443-e6a8451acb0d",
+                "name": "Text",
+                "textString": "\"else: %y_default\"",
+                "visible": "not use_pre_as_default"
+            },
+            {
+                "extent": "{{-100,-50},{300,-80}}",
+                "id": "725715fe-20fa-4baa-a918-ff12898172f4",
+                "name": "Text",
+                "textString": "\"else: pre(y)\"",
+                "visible": "use_pre_as_default"
+            },
+            {
+                "borderPattern": "BorderPattern.Raised",
+                "extent": "{{-100,-40},{300,40}}",
+                "fillColor": "{255,213,170}",
+                "fillPattern": "FillPattern.Solid",
+                "id": "7931ea8d-a912-461c-b683-6b2494ad911f",
+                "name": "Rectangle"
+            },
+            {
+                "extent": "{{-100,90},{300,50}}",
+                "id": "9f35b0b9-eef6-4485-b068-ed944da01681",
+                "name": "Text",
+                "textColor": "{0,0,255}",
+                "textString": "\"%name\""
+            },
+            {
+                "extent": "{{-80,15},{290,-15}}",
+                "id": "32188d7b-bb2d-4a7b-940d-17265318acf8",
+                "name": "Text",
+                "textString": "\"%expr\""
+            }
+        ],
+        "transformation": "true",
+        "type": "",
+        "typeDimension": "",
+        "visibleList": null
+    }
+]
